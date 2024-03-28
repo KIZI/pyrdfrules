@@ -2,6 +2,10 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/pyrdfrules.svg)](https://pypi.org/project/pyrdfrules)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyrdfrules.svg)](https://pypi.org/project/pyrdfrules)
 
+<p align="center">
+  <img src="https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg">
+</p>
+
 <h1 align="center">
 PyRDFRules
 </h1>
