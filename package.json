@@ -1,0 +1,15 @@
+{
+  "name": "pyrdfrules-ui",
+  "version": "1.0.0",
+  "description": "pyrdfrules npm assets",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build:src": "echo 'wip'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

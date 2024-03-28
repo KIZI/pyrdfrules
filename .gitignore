@@ -1,0 +1,6 @@
+dist/
+.vscode/
+src/rdfrules
+jdk
+sample/
+venv/
