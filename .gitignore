@@ -4,3 +4,4 @@ src/rdfrules
 jdk
 sample/
 venv/
+.DS_Store
