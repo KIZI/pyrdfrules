@@ -1,0 +1,2 @@
+class BaseActions():
+    pass
