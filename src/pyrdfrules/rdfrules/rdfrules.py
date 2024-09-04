@@ -1,23 +1,17 @@
 from typing import Awaitable
 from pydantic import BaseModel
 
-from pyrdfrules.common.file.workspace import Workspace
-from pyrdfrules.common.rule.ruleset import Ruleset
 from pyrdfrules.engine.engine import Engine
-from pyrdfrules.engine.local_http_engine import LocalHttpEngine
-from pyrdfrules.pipeline.pipeline import Pipeline
 
 class RDFRules(BaseModel):
     
-    engine: Engine = LocalHttpEngine()
+    engine: Engine
     
-    workspace: Workspace
-    
-    async def launch(self, pipeline: Pipeline) -> Awaitable[Ruleset]:
+    async def start(self) -> Awaitable:
         """
-        Launches the pipeline and returns the ruleset.
+        Starts the engine.
         """
         
-        self.engine.launch_pipeline(pipeline)
+        await self.engine.start()
         
         pass

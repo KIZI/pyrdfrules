@@ -28,7 +28,7 @@ class LocalHttpEngine(Engine):
     """
     __ready: bool = False
     
-    def install(self) -> Awaitable:
+    async def install(self) -> Awaitable:
         """Installs RDFRules locally.
 
         Returns:

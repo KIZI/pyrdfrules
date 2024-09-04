@@ -34,10 +34,10 @@ def start_rdfrules():
     path = os.path.abspath('../src/rdfrules')
 
     jpype.startJVM(
-        "-Dprog.version=1.7.2"
+        "-Dprog.version=1.7.2",
         "-Dprog.revision=3ea05ae9ef9d9258c005a1971721225663d57f98",
         "-Dprog.home=%s" % path,
-        "-Drdfrules.writable.path=."
+        "-Drdfrules.writable.path=.",
         classpath=["%s/lib/*" % path]
     )
     

@@ -1,7 +1,13 @@
 annotated-types==0.6.0
 jdk==0.0.6
 JPype1==1.5.0
+numpy==2.1.1
 packaging==24.0
+pandas==2.2.2
 pydantic==2.6.4
 pydantic_core==2.16.3
+python-dateutil==2.9.0.post0
+pytz==2024.1
+six==1.16.0
 typing_extensions==4.10.0
+tzdata==2024.1
