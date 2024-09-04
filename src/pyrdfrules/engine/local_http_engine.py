@@ -1,7 +1,7 @@
 from multiprocessing import Process
 from typing import Awaitable
 from pyrdfrules.engine.engine import Engine
-from pyrdfrules.engine.util.jvm import install_jvm, install_rdfrules, is_jvm_installed, is_rdfrules_installed, set_jvm_env, start_rdfrules_process
+from pyrdfrules.engine.util.jvm import install_jvm, install_rdfrules, is_jvm_installed, is_rdfrules_installed, set_jvm_env, start_rdfrules_process, stop_rdfrules_process
 
 class LocalHttpEngine(Engine):
     """
@@ -65,5 +65,14 @@ class LocalHttpEngine(Engine):
         set_jvm_env()
         
         self.__launch_process()
+        
+        pass
+    
+    async def stop(self) -> Awaitable:
+        """
+        Stops the engine.
+        """
+        
+        stop_rdfrules_process()
         
         pass

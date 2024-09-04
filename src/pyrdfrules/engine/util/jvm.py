@@ -14,13 +14,7 @@ from io import StringIO
 from pyrdfrules.engine.exception.failed_to_start_exception import FailedToStartException
 
 started = False
-
-class TeeOut(StringIO):
-    def __init__(self, pipe, std=sys.__stdout__):
-        self.pipe = pipe
-
-    def write(self, s):
-        self.pipe.send(s.strip())
+result_process = None
 
 def is_jvm_installed() -> bool:
     return os.path.isdir(jdk._JRE_DIR)
@@ -48,16 +42,23 @@ def install_rdfrules(path: str = '') -> bool:
 def read_output_stdout(pipe, process):
     print("Reading output")
     
-    for line in iter(process.stdout.readline, b''):
-        pipe.send(line.strip())
+    try:
+        for line in iter(process.stdout.readline, b''):
+            pipe.send(line.strip())
         
-    process.stdout.close()
+        process.stdout.close()
+    except BrokenPipeError:
+        pass
     
 def read_output_stderr(pipe, process):
-    for line in iter(process.stderr.readline, ''):
-        pipe.send(line.strip())
+    
+    try:
+        for line in iter(process.stderr.readline, b''):
+            pipe.send(line.strip())
         
-    process.stderr.close()
+        process.stderr.close()
+    except BrokenPipeError:
+        pass
     
 def start_rdfrules(pipe):
     path = os.path.abspath('../src/rdfrules')
@@ -78,8 +79,14 @@ def start_rdfrules(pipe):
         command, 
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True
+        text=True,
+        preexec_fn=os.setsid
     )
+    
+    # TODO - rework this
+    global result_process
+    
+    result_process = process.pid
     
     Thread(target=read_output_stdout, args=(pipe, process)).start()
     Thread(target=read_output_stderr, args=(pipe, process)).start()
@@ -92,7 +99,7 @@ def wait_for_pipe(pipe):
     while True:
         try:
             recv = pipe.recv().strip()
-            
+                        
             if recv.startswith("Server online"):
                 started = True
                 break
@@ -108,10 +115,13 @@ def start_rdfrules_process():
     pipe_thread = Thread(target=wait_for_pipe, args=(parent_pipe,))
     pipe_thread.start()
     
-    proc = Process(target=start_rdfrules, args=(child_pipe, ), daemon=True)
+    proc = Thread(target=start_rdfrules, args=(child_pipe, ))
     proc.start()
     
+    # TODO -  make this configurable
     pipe_thread.join(10)
+    
+    # TODO - Parse output for a better error message - port in use etc
     
     if not started:
         raise FailedToStartException("RDFRules process did not start")
@@ -119,3 +129,6 @@ def start_rdfrules_process():
     print("Started RDFRules process")
     
     return proc
+
+def stop_rdfrules_process():
+    os.killpg(os.getpgid(result_process), 15)

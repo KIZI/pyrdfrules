@@ -42,6 +42,13 @@ class Engine(BaseModel):
             Awaitable: Non-blocking future.
         """
         pass
+
+    @ensure_started    
+    async def stop(self) -> Awaitable:
+        """
+        Stops the engine.
+        """
+        pass
     
     @ensure_started
     async def launch_pipeline(self, pipeline: Pipeline) -> Awaitable[PipelineRunResult]:
