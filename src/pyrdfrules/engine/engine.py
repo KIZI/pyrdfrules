@@ -3,7 +3,6 @@ from typing import Awaitable
 from pydantic import BaseModel
 
 from pyrdfrules.engine.result.pipeline import PipelineRunResult
-from pyrdfrules.pipeline.pipeline import Pipeline
 
 def ensure_started(func):
     def wrapper(*args):
@@ -52,7 +51,7 @@ class Engine(BaseModel):
         pass
     
     @ensure_started
-    async def launch_pipeline(self, pipeline: Pipeline) -> Awaitable[PipelineRunResult]:
+    async def launch_pipeline(self) -> Awaitable[PipelineRunResult]:
         """
         Launches the pipeline on this specific engine.
 
