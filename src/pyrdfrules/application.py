@@ -7,12 +7,14 @@ class Application(BaseModel):
     
     __rdfrules: RDFRules
         
-    async def start_local(self) -> RDFRules:
+    async def start_local(self, **kwargs) -> RDFRules:
         """Starts a local instance of RDFRules.
         """
         
         self.__rdfrules = RDFRules(
-            engine=LocalHttpEngine()
+            engine=LocalHttpEngine(
+                kwargs
+            )
         )
         
         await self.__rdfrules.engine.start()

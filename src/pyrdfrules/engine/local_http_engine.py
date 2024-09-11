@@ -28,6 +28,11 @@ class LocalHttpEngine(Engine):
     """
     __ready: bool = False
     
+    def __init__(self, install_jvm: bool = False, install_rdfrules: bool = False):
+        super().__init__()
+        self.install_jvm = install_jvm
+        self.install_rdfrules = install_rdfrules
+    
     async def install(self) -> Awaitable:
         """Installs RDFRules locally.
 

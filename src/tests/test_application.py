@@ -11,7 +11,10 @@ class TestApplication(unittest.IsolatedAsyncioTestCase):
         """
         
         app = pyrdfrules.application.Application()
-        rdfrules = await app.start_local()
+        rdfrules = await app.start_local(
+            install_jvm = True,
+            install_rdfrules = True
+        )
         self.assertIsNotNone(rdfrules, "Should not be None")
         time.sleep(10)
         await app.stop()
