@@ -1,3 +1,4 @@
+import json
 from typing import Awaitable
 from pydantic import BaseModel
 
@@ -64,4 +65,26 @@ class Engine(BaseModel):
         Throws:    
         
         """
+        pass
+    
+    
+    
+    @ensure_started
+    async def run_task(self, task: str|dict) -> Awaitable[None]:
+        """
+        Runs a task on the engine.
+
+        Args:
+            task (str|dict): Task to run, either string-serialized JSON or JSON represented as a dict.
+
+        Returns:
+            Awaitable[None]: Returns a non-blocking future.
+        """
+        
+        # todo custom exception
+        if not isinstance(task, dict):
+            task = json.loads(task)
+            
+        
+        
         pass
