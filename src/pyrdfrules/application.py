@@ -43,7 +43,3 @@ class Application(BaseModel):
         """
         
         await self.__rdfrules.engine.stop()
-
-    def check(self):
-        """Checks the liveliness state of the application.
-        """

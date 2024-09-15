@@ -19,7 +19,7 @@ class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
         )
         
         self.assertIsNotNone(rdfrules, "Should not be None")
-        await rdfrules.engine.check()
+        await rdfrules.workspace.get_files()
         
         await app.stop()
 

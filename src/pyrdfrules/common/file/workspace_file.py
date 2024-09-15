@@ -1,22 +1,22 @@
 from pathlib import Path
+from typing import List
 from pydantic import BaseModel
 
-from pyrdfrules.common.file.workspace import Workspace
+from pyrdfrules.common.file.workspace_item import WorkspaceItem
 
-class WorkspaceFile(BaseModel):
-    """
-    Represents a file in the workspace.
+class WorkspaceFile(WorkspaceItem):
+    """Represents a file in the workspace.
     """
     
+    name: str
+    """Name of the workspace file.
     """
-    Path relative to the workspace root.
-    """
-    path: str
     
+    size: int
+    """Size of the file in bytes.
     """
-    Workspace the file is in.
-    """
-    workspace: Workspace
     
-    def get_absolute_path(self) -> str:
-        return ''
+    path: Path
+    """Full path to the file.
+    """
+    

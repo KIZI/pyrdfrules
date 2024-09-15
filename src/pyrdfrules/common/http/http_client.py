@@ -1,3 +1,4 @@
+from typing import Awaitable
 from pydantic_core import Url
 from requests import Response, Session
 
@@ -29,7 +30,7 @@ class HttpClient():
         
         self.base_url = str(url)
     
-    def get(self, url: str | Url) -> Response:
+    def get(self, url: str | Url) -> Awaitable[Response]:
         """Sends a GET request.
 
         Args:

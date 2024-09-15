@@ -1,27 +1,27 @@
 from pathlib import Path
-from pydantic import BaseModel
 
-from pyrdfrules.common.file.workspace_file import WorkspaceFile
+from pyrdfrules.api.workspace.workspace_api import WorkspaceApi
+from pyrdfrules.common.file.workspace_tree import WorkspaceTree
 
-class Workspace(BaseModel):
+class Workspace():
     """
     Path in which RDFRules can find datasets and store results.
     """
     
-    """
-    Base path to the workspace root directory.
-    """
-    base_path: Path
+    api: WorkspaceApi
     
-    def open(self, path: str) -> WorkspaceFile:
-        """Creates a file reference if the specified path exists.
-
-        Args:
-            path (str): Relative path from the workspace root.
+    def __init__(self, api: WorkspaceApi) -> None:
+        self.api = api
+        pass
+    
+    async def get_files(self) -> WorkspaceTree:
+        """Returns a list of all files in the workspace.
 
         Returns:
-            WorkspaceFile: Workspace file abstraction.
+            WorkspaceTree: List of workspace files.
         """
         
-        # todo - check if the file exists
-        return WorkspaceFile(path, self)
+        tree = WorkspaceTree()
+        tree.create_from_dict(await self.api.get_all_files())
+        
+        return tree

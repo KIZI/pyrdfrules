@@ -11,27 +11,28 @@ class WorkspaceHttpApi(WorkspaceApi):
         super().__init__(context)
         pass
     
-    async def get_all_files(self):
+    async def get_all_files(self) -> dict:
+        """Get all files and directories recursively from the workspace directory.
+        """
         
         response = self.context.get_http_client().get(WORKSPACE_URL)
         
-        print(response.text)
-        
-        """Get all files and directories recursively from the workspace directory.
-        """
-        pass
+        return response.json()
     
     async def get_file(self, path: str):
         """Get the file content.
         """
+        
         pass
     
     async def delete_file(self, path: str):
         """Delete a file.
         """
+        
         pass
     
     async def upload_file(self, path: str, content: bytes):
         """Upload a file.
         """
+        
         pass
