@@ -1,4 +1,7 @@
+from typing import Awaitable
 from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
+from pyrdfrules.common.pipeline.pipeline import Pipeline
+from pyrdfrules.common.task.task import Task
 
 
 class TaskApi():
@@ -9,9 +12,16 @@ class TaskApi():
         self.context = context
         pass
     
-    async def create_task(self):
-        """Create a task.
+    async def create_task(self, task: Pipeline|dict|str) -> Awaitable[Task]:
+        """Creates a task.
+
+        Args:
+            task (Pipeline | dict | str): Task to create.
+
+        Returns:
+            Awaitable[Task]: Created task.
         """
+        
         pass
     
     async def get_task_status(self, task_id: str):

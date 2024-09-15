@@ -45,3 +45,19 @@ class HttpClient():
         print("GET", url)
         
         return self.session.get(url)
+
+    async def post(self, url: str | Url, **kwargs) -> Awaitable[Response]:
+        """Sends a POST request.
+
+        Args:
+            url (str|Url): URL to send the request to.
+
+        Returns:
+            Response: Response object.
+        """
+        
+        url = self.base_url + str(url)
+        
+        print("POST", url)
+        
+        return self.session.post(url, **kwargs)

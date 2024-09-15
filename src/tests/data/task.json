@@ -1,0 +1,110 @@
+[
+  {
+    "name": "LoadGraph",
+    "parameters": {
+      "path": "/dbpedia_yago/mappingbased_objects_sample.ttl",
+      "graphName": "<dbpedia>"
+    }
+  },
+  {
+    "name": "LoadGraph",
+    "parameters": {
+      "path": "/dbpedia_yago/yagoFacts.tsv",
+      "settings": "tsvParsedUris",
+      "graphName": "<yago>"
+    }
+  },
+  {
+    "name": "LoadGraph",
+    "parameters": {
+      "path": "/dbpedia_yago/yagoDBpediaInstances.tsv",
+      "settings": "tsvParsedUris",
+      "graphName": "<dbpedia>"
+    }
+  },
+  {
+    "name": "MergeDatasets",
+    "parameters": {}
+  },
+  {
+    "name": "AddPrefixes",
+    "parameters": {
+      "prefixes": [
+        {
+          "prefix": "dbo",
+          "nameSpace": "http://dbpedia.org/ontology/"
+        },
+        {
+          "prefix": "dbr",
+          "nameSpace": "http://dbpedia.org/resource/"
+        }
+      ]
+    }
+  },
+  {
+    "name": "Index",
+    "parameters": {
+      "train": [],
+      "test": []
+    }
+  },
+  {
+    "name": "Mine",
+    "parameters": {
+      "thresholds": [
+        {
+          "name": "MinHeadSize",
+          "value": 100
+        },
+        {
+          "name": "MaxRuleLength",
+          "value": 3
+        },
+        {
+          "name": "Timeout",
+          "value": 5
+        },
+        {
+          "name": "MinHeadCoverage",
+          "value": 0.01
+        }
+      ],
+      "ruleConsumers": [
+        {
+          "name": "topK",
+          "k": 1000,
+          "allowOverflow": false
+        }
+      ],
+      "patterns": [],
+      "constraints": [
+        {
+          "name": "WithoutConstants"
+        }
+      ],
+      "parallelism": 0
+    }
+  },
+  {
+    "name": "ComputeConfidence",
+    "parameters": {
+      "name": "PcaConfidence",
+      "min": 0.5,
+      "topk": 50
+    }
+  },
+  {
+    "name": "SortRuleset",
+    "parameters": {
+      "by": []
+    }
+  },
+  {
+    "name": "GraphAwareRules",
+    "parameters": {}
+  },
+  {
+    "name": "GetRules",
+    "parameters": {}
+  }
+]
