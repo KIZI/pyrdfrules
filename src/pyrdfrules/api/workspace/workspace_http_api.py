@@ -15,7 +15,7 @@ class WorkspaceHttpApi(WorkspaceApi):
         """Get all files and directories recursively from the workspace directory.
         """
         
-        response = self.context.get_http_client().get(WORKSPACE_URL)
+        response = await self.context.get_http_client().get(WORKSPACE_URL)
         
         return response.json()
     

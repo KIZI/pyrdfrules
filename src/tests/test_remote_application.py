@@ -4,6 +4,7 @@ import unittest
 from pydantic_core import Url
 
 import pyrdfrules.application
+from pyrdfrules.common.task.task import Task
 
 class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
         
@@ -36,10 +37,16 @@ class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
         
         self.assertIsNotNone(rdfrules, "Should not be None")
         
+        task : Task = None
+        
         with open("./tests/data/task.json", "r") as file:        
             task_json_from_file = file.read()
             task = await rdfrules.task.create_task_from_string(task_json_from_file)
             self.assertIsNotNone(task, "Should not be None")
+        
+        progress = await rdfrules.task.get_task_by_id(task.id)
+        self.assertIsNotNone(progress, "Should be None")
+        print(progress)
         
         await app.stop()
 

@@ -24,9 +24,23 @@ class TaskApi():
         
         pass
     
-    async def get_task_status(self, task_id: str):
-        """Get the status of a task.
+    async def get_task(self, task_id: str = None, task: Task = None) -> Awaitable[Task]:
+        """Get a task, or update status of an existing task.
+
+        Args:
+            task_id (str, optional): ID of the task. Defaults to None.
+            task (Task, optional): Task object. Defaults to None.
+
+        Raises:
+            ValueError: If task_id or task is not provided.
+
+        Returns:
+            Awaitable[Task]: Retrieved task.
         """
+        
+        if task_id is None and task is None:
+            raise ValueError('task_id or task must be provided')
+        
         pass
     
     async def interrupt_task(self, task_id: str):

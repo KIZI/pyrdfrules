@@ -30,7 +30,7 @@ class HttpClient():
         
         self.base_url = str(url)
     
-    def get(self, url: str | Url) -> Awaitable[Response]:
+    async def get(self, url: str | Url) -> Awaitable[Response]:
         """Sends a GET request.
 
         Args:
