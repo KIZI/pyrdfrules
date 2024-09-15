@@ -1,0 +1,2 @@
+
+WORKSPACE_URL = 'workspace'

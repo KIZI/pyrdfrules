@@ -1,9 +1,15 @@
 from multiprocessing import Process
 from typing import Awaitable
-from pyrdfrules.engine.engine import Engine
-from pyrdfrules.engine.util.jvm import install_jvm, install_rdfrules, is_jvm_installed, is_rdfrules_installed, set_jvm_env, start_rdfrules_process, stop_rdfrules_process
 
-class LocalHttpEngine(Engine):
+from pydantic_core import Url
+from pyrdfrules.api.http_rdfrules_api import HTTPRDFRulesApi
+from pyrdfrules.api.http_rdfrules_api_context import HTTPRDFRulesApiContext
+from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
+from pyrdfrules.engine.engine import Engine
+from pyrdfrules.engine.http_engine import HttpEngine
+from pyrdfrules.engine.util.jvm import get_server_url, install_jvm, install_rdfrules, is_jvm_installed, is_rdfrules_installed, set_jvm_env, start_rdfrules_process, stop_rdfrules_process
+
+class LocalHttpEngine(HttpEngine):
     """
     Launches a local instance of RDFRules and uses the HTTP API to communicate.
     """
@@ -70,6 +76,12 @@ class LocalHttpEngine(Engine):
         set_jvm_env()
         
         self.__launch_process()
+        
+        self.api = HTTPRDFRulesApi(
+            HTTPRDFRulesApiContext(
+                Url(get_server_url())
+            )
+        )
         
         pass
     

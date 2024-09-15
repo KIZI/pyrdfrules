@@ -1,7 +1,7 @@
 import json
 from typing import Awaitable
-from pydantic import BaseModel
 
+from pyrdfrules.api.rdfrules_api import RDFRulesApi
 from pyrdfrules.engine.result.pipeline import PipelineRunResult
 
 def ensure_started(func):
@@ -10,12 +10,14 @@ def ensure_started(func):
         return func(*args)
     return wrapper
 
-class Engine(BaseModel):
+class Engine():
     """
     Base class for RDFRules engine backends. This class contains shared methods and all its descendants represent different methods to communicate with the RDFRules engine.
     """
     
     started: bool = False
+    
+    api: RDFRulesApi
     
     async def start(self) -> Awaitable:
         """
@@ -65,8 +67,6 @@ class Engine(BaseModel):
         
         """
         pass
-    
-    
     
     @ensure_started
     async def run_task(self, task: str|dict) -> Awaitable[None]:

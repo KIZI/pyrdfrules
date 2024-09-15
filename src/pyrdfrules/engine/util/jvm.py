@@ -15,6 +15,7 @@ from pyrdfrules.engine.exception.failed_to_start_exception import FailedToStartE
 
 started = False
 result_process = None
+server_url = None
 
 def is_jvm_installed() -> bool:
     return os.path.isdir(jdk._JRE_DIR)
@@ -95,12 +96,15 @@ def start_rdfrules(pipe):
 
 def wait_for_pipe(pipe):
     global started
+    global server_url
     
     while True:
         try:
             recv = pipe.recv().strip()
-                        
-            if recv.startswith("Server online"):
+            print(recv)
+            
+            if recv.startswith("Server online at"):
+                server_url = recv.split(" ")[-1]
                 started = True
                 break
             
@@ -129,6 +133,9 @@ def start_rdfrules_process():
     print("Started RDFRules process")
     
     return proc
+
+def get_server_url():
+    return server_url
 
 def stop_rdfrules_process():
     os.killpg(os.getpgid(result_process), 15)

@@ -1,5 +1,2 @@
-from pydantic import BaseModel
-
-
-class RDFRulesApiContext(BaseModel):
+class RDFRulesApiContext():
     pass
