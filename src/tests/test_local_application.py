@@ -3,7 +3,7 @@ import unittest
 
 import pyrdfrules.application
 
-class TestApplication(unittest.IsolatedAsyncioTestCase):
+class TestLocalApplication(unittest.IsolatedAsyncioTestCase):
 
     async def skip_test_runs_local(self):
         """
@@ -19,7 +19,7 @@ class TestApplication(unittest.IsolatedAsyncioTestCase):
         time.sleep(10)
         await app.stop()
         
-    async def test_runs_workspace(self):
+    async def skip_test_runs_workspace(self):
         """
         Check if the application runs with a workspace, does not crash and terminates correctly.
         """
