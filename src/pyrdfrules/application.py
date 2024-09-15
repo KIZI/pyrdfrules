@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from pydantic_core import Url
 
+from pyrdfrules.common.logging.logger import log
 from pyrdfrules.engine.http_engine import HttpEngine
 from pyrdfrules.engine.local_http_engine import LocalHttpEngine
 from pyrdfrules.engine.remote_http_engine import RemoteHttpEngine
@@ -14,6 +15,8 @@ class Application(BaseModel):
         """Starts a local instance of RDFRules.
         """
         
+        log().info("Starting local RDFRules")
+        
         self.__rdfrules = RDFRules(
             engine=LocalHttpEngine(
                 kwargs
@@ -22,11 +25,15 @@ class Application(BaseModel):
         
         await self.__rdfrules.engine.start()
         
+        log().info("Local instance of RDFRules started")
+        
         return self.__rdfrules
     
     async def start_remote(self, url: Url|str) -> RDFRules:
         """Starts a remote instance of RDFRules.
         """
+        
+        log().info("Connecting to remote instance of RDFRules at %s", url)
         
         self.__rdfrules = RDFRules(
             engine=RemoteHttpEngine(
