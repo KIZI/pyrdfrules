@@ -22,14 +22,11 @@ class TaskUpdater():
         """Runs the task.
         """
         
-        time.sleep(self.task_update_interval_ms / 1000)
-        
         while not task.is_finished():
-            response = await self.api.get_task_response(task.id)
-            print(response)
-            await self.update_task(task, response)
             time.sleep(self.task_update_interval_ms / 1000)
-        
+            response = await self.api.get_task_response(task.id)
+            await self.update_task(task, response)
+            
         pass
     
     async def update_task(self, task: Task, response: dict) -> Awaitable[Task]:
