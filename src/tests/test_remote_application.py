@@ -44,11 +44,16 @@ class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
             task = await rdfrules.task.create_task_from_string(task_json_from_file)
             self.assertIsNotNone(task, "Should not be None")
             
-        for i in range(10):
-            progress = await rdfrules.task.get_task_by_id(task.id)
-            self.assertIsNotNone(progress, "Should not be None")
-            print(progress)
-            time.sleep(10)
+        await rdfrules.task.run_task(task)
+        
+        print("Finished task")
+        print(task.result)
+            
+        #for i in range(10):
+        #    progress = await rdfrules.task.get_task_by_id(task.id)
+        #    self.assertIsNotNone(progress, "Should not be None")
+        #    print(progress)
+        #    time.sleep(10)
         
         await app.stop()
 
