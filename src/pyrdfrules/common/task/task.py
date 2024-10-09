@@ -1,8 +1,11 @@
 import datetime
 from typing import Awaitable
-from pydantic import BaseModel
 
-class Task(BaseModel):
+from pyrdfrules.common.event.event_dispatcher import EventDispatcher
+from pyrdfrules.common.task.event.task_finished_message import TaskFinishedMessage
+from pyrdfrules.common.task.event.task_log_message import TaskLogMessage
+
+class Task():
     
     id: str
     """UUID of the task.
@@ -32,7 +35,14 @@ class Task(BaseModel):
     """Result of the task.
     """
     
-    # TODO add events
+    on_log_message: EventDispatcher = EventDispatcher()
+    
+    on_finished: EventDispatcher = EventDispatcher()
+    
+    def __init__(self, id: str, started: datetime.datetime) -> None:
+        self.id = id
+        self.started = started
+        pass
     
     def is_finished(self) -> bool:
         """Checks if the task is finished.
@@ -44,11 +54,29 @@ class Task(BaseModel):
         """Updates the task from a dictionary.
         """
         
-        self.logs = data['logs']
+        if "logs" in data:
+            for log in data['logs']:
+                self.on_log_message.dispatch(
+                    TaskLogMessage(
+                        id=self.id,
+                        message=log["message"],
+                        time=datetime.datetime.fromisoformat(log["time"])
+                    )
+                )
+        
+            self.logs = data['logs']
         
         if "finished" in data:
             self.status = 'finished'
             self.finished = datetime.datetime.fromisoformat(data['finished'])
+            
+            self.on_finished.dispatch(
+                TaskFinishedMessage(
+                    id=self.id,
+                    time_start=self.started,
+                    time_end=self.finished
+                )
+            )
             
         if "result" in data:
             self.result = data['result']

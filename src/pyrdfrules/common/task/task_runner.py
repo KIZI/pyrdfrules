@@ -18,7 +18,12 @@ class TaskRunner():
         """Creates a task.
         """
         
-        return await self.api.create_task(task)
+        task = await self.api.create_task(task)
+        
+        task.on_log_message += lambda message: print(message)
+        task.on_finished += lambda message: print('Task finished', message)
+        
+        return task
     
     async def run_task(self, task: Task) -> None:
         """Runs the task to completion.

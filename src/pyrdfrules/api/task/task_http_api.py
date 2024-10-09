@@ -46,8 +46,7 @@ class TaskHttpApi(TaskApi):
         
         return Task(
             id=data['id'],
-            started=datetime.fromisoformat(data['started']),
-            api=self
+            started=datetime.fromisoformat(data['started'])
         )
     
     async def get_task(self, task_id: str = None, task: Task = None) -> Awaitable[Task]:
@@ -59,8 +58,7 @@ class TaskHttpApi(TaskApi):
         
         return Task(
             id=data['id'],
-            started=datetime.fromisoformat(data['started']),
-            api=self
+            started=datetime.fromisoformat(data['started'])
         )
         
     async def get_task_response(self, task_id: str) -> Awaitable[dict]:
