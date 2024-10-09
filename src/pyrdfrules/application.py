@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from pydantic_core import Url
 
 from pyrdfrules.common.logging.logger import log
+from pyrdfrules.config import Config
 from pyrdfrules.engine.http_engine import HttpEngine
 from pyrdfrules.engine.local_http_engine import LocalHttpEngine
 from pyrdfrules.engine.remote_http_engine import RemoteHttpEngine
@@ -20,7 +21,8 @@ class Application(BaseModel):
         self.__rdfrules = RDFRules(
             engine=LocalHttpEngine(
                 kwargs
-            )
+            ),
+            config=Config()
         )
         
         await self.__rdfrules.engine.start()
@@ -38,7 +40,8 @@ class Application(BaseModel):
         self.__rdfrules = RDFRules(
             engine=RemoteHttpEngine(
                 url=url
-            )
+            ),
+            config=Config()
         )
         
         await self.__rdfrules.engine.start()

@@ -3,6 +3,7 @@ from typing import Any, Awaitable
 from pyrdfrules.api.workspace.workspace_api import WorkspaceApi
 from pyrdfrules.common.file.workspace import Workspace
 from pyrdfrules.common.task.task_runner import TaskRunner
+from pyrdfrules.config import Config
 from pyrdfrules.engine.engine import Engine
 
 class RDFRules():
@@ -13,8 +14,11 @@ class RDFRules():
     
     task: TaskRunner
     
-    def __init__(self, engine: Engine) -> None:
+    config: Config
+    
+    def __init__(self, engine: Engine, config: Config) -> None:
         self.engine = engine
+        self.config = config
         pass
     
     def __getattr__(self, name: str) -> Any:
