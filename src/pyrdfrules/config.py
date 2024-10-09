@@ -11,6 +11,10 @@ class Config(BaseModel):
     This affects how often the task status is updated.
     """
     
+    task_timeout_ms: int = 0
+    """Timeout for the task in milliseconds. Zero means no timeout.
+    """
+    
     log_output: bool = True
     """Logs output to the console.
     """

@@ -5,6 +5,7 @@ from pydantic_core import Url
 
 import pyrdfrules.application
 from pyrdfrules.common.task.task import Task
+from pyrdfrules.config import Config
 
 class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
         
@@ -32,7 +33,10 @@ class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
         app = pyrdfrules.application.Application()
         
         rdfrules = await app.start_remote(
-            url = Url("http://rdfrules.vse.cz/api/")
+            url = Url("http://rdfrules.vse.cz/api/"),
+            config=Config(
+                task_update_interval_ms=1000
+            )
         )
         
         self.assertIsNotNone(rdfrules, "Should not be None")

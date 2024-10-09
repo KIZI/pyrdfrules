@@ -31,7 +31,7 @@ class Application(BaseModel):
         
         return self.__rdfrules
     
-    async def start_remote(self, url: Url|str) -> RDFRules:
+    async def start_remote(self, url: Url|str, config: Config|None = None) -> RDFRules:
         """Starts a remote instance of RDFRules.
         """
         
@@ -41,7 +41,7 @@ class Application(BaseModel):
             engine=RemoteHttpEngine(
                 url=url
             ),
-            config=Config()
+            config=Config() if config is None else config
         )
         
         await self.__rdfrules.engine.start()
