@@ -4,7 +4,7 @@ from pyrdfrules.rdfgraph import RDFGraph
 
 class PredictionTasksActions(BaseActions):
     
-    async def get(self) -> Awaitable[RDFGraph]:
+    def get(self) -> Awaitable[RDFGraph]:
         """Get and show prediction tasks with candidates.
         
         Returns:
@@ -12,7 +12,7 @@ class PredictionTasksActions(BaseActions):
         """
         pass
     
-    async def evaluate(self) -> Awaitable[RDFGraph]:
+    def evaluate(self) -> Awaitable[RDFGraph]:
         """Evaluate all prediction tasks. It returns ranking metrics (such as hits@k, mean reciprocal rank), and completeness/quality metrics with confusion matrix (such as precision, recall).
         
         Returns:

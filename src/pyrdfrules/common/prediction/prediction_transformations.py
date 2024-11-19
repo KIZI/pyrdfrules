@@ -5,7 +5,7 @@ from pyrdfrules.rdfgraph import RDFGraph
 
 class PredictionTransformations(BaseTransformations):
 
-    async def filter(self) -> Awaitable[Prediction]:
+    def filter(self) -> Awaitable[Prediction]:
         """Returns a new Prediction object with filtered predicted triples by measures of significance, rule patterns, triple filters and other options.
 
         Returns:
@@ -13,7 +13,7 @@ class PredictionTransformations(BaseTransformations):
         """
         pass
     
-    async def shrink(self) -> Awaitable[Prediction]:
+    def shrink(self) -> Awaitable[Prediction]:
         """Returns a new shrinked Prediction object.
 
         Returns:
@@ -21,7 +21,7 @@ class PredictionTransformations(BaseTransformations):
         """
         pass
     
-    async def sort(self) -> Awaitable[Prediction]:
+    def sort(self) -> Awaitable[Prediction]:
         """Returns a new Prediction object with sorted predicted triples by their rules and their measures of significance.
 
         Returns:
@@ -29,7 +29,7 @@ class PredictionTransformations(BaseTransformations):
         """
         pass
     
-    async def group(self) -> Awaitable[Prediction]:
+    def group(self) -> Awaitable[Prediction]:
         """Aggregates and scores triples predicted by many rules.
 
         Returns:
@@ -37,7 +37,7 @@ class PredictionTransformations(BaseTransformations):
         """
         pass
     
-    async def to_prediction_tasks(self) -> Awaitable[RDFGraph]:
+    def to_prediction_tasks(self) -> Awaitable[RDFGraph]:
         """Generate prediction tasks by a user-defined strategy.
 
         Returns:
@@ -45,7 +45,7 @@ class PredictionTransformations(BaseTransformations):
         """
         pass
     
-    async def to_dataset(self) -> Awaitable[RDFGraph]:
+    def to_dataset(self) -> Awaitable[RDFGraph]:
         """Transform all predicted triples into the RDFGraph object.
 
         Returns:

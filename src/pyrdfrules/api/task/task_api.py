@@ -12,7 +12,7 @@ class TaskApi():
         self.context = context
         pass
     
-    async def create_task(self, task: Pipeline|dict|str) -> Awaitable[Task]:
+    def create_task(self, task: Pipeline|dict|str) -> Awaitable[Task]:
         """Creates a task.
 
         Args:
@@ -24,7 +24,7 @@ class TaskApi():
         
         pass
     
-    async def get_task(self, task_id: str = None, task: Task = None) -> Awaitable[Task]:
+    def get_task(self, task_id: str = None, task: Task = None) -> Awaitable[Task]:
         """Get a task, or update status of an existing task.
 
         Args:
@@ -43,7 +43,7 @@ class TaskApi():
         
         pass
     
-    async def interrupt_task(self, task_id: str):
+    def interrupt_task(self, task_id: str):
         """Interrupt a task.
         """
         pass

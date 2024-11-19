@@ -4,7 +4,7 @@ from pyrdfrules.rdfgraph import RDFGraph
 
 class PredictionActions(BaseActions):
     
-    async def get(self) -> Awaitable[RDFGraph]:
+    def get(self) -> Awaitable[RDFGraph]:
         """Get and show predicted triples with bound rules.
         
         Returns:
@@ -12,7 +12,7 @@ class PredictionActions(BaseActions):
         """
         pass
     
-    async def export(self) -> Awaitable[RDFGraph]:
+    def export(self) -> Awaitable[RDFGraph]:
         """Export this graph into a file in some familiar RDF format.
         
         Returns:

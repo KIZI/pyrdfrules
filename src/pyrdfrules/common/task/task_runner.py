@@ -1,6 +1,8 @@
 from pyrdfrules.api.task.task_api import TaskApi
+from pyrdfrules.common.logging.logger import log
 from pyrdfrules.common.task.task import Task
 from pyrdfrules.common.task.task_updater import TaskUpdater
+from pyrdfrules.config import Config
 
 
 class TaskRunner():
@@ -9,36 +11,46 @@ class TaskRunner():
     
     task_updater: TaskUpdater
     
-    def __init__(self, api: TaskApi) -> None:
+    config: Config
+    
+    def __init__(self, api: TaskApi, config: Config) -> None:
         self.api = api
-        self.task_updater = TaskUpdater(api)
+        self.task_updater = TaskUpdater(api, config)
+        self.config = config
+        
         pass
     
-    async def create_task_from_string(self, task: str) -> Task:
+    def create_task_from_string(self, task: str) -> Task:
         """Creates a task.
         """
         
-        task = await self.api.create_task(task)
+        task = self.api.create_task(task)
         
-        task.on_log_message += lambda message: print(message)
-        task.on_finished += lambda message: print('Task finished', message)
+        task.on_log_message += lambda message: log().info(message)
+        task.on_finished += lambda message: log().info('Task finished')
         
         return task
     
-    async def run_task(self, task: Task) -> None:
+    def run_task(self, task: Task) -> None:
         """Runs the task to completion.
         """
         
-        await self.task_updater.run(task)
+        self.task_updater.run(task)
     
-    async def get_task_by_id(self, task_id: str) -> Task:
+    def get_task_by_id(self, task_id: str) -> Task:
         """Get a task, or update status of an existing task.
         """
         
-        return await self.api.get_task(task_id)
+        return self.api.get_task(task_id)
     
-    async def update_task(self, task: Task) -> Task:
+    def update_task(self, task: Task) -> Task:
         """Updates a task.
         """
         
-        return await self.api.get_task(task = task)
+        return self.api.get_task(task = task)
+    
+    def stop_task(self, task: Task) -> None:
+        """Stops a task.
+        """
+        
+        self.api.interrupt_task(task_id=task.id)

@@ -39,7 +39,7 @@ class LocalHttpEngine(HttpEngine):
         self.install_jvm = install_jvm
         self.install_rdfrules = install_rdfrules
     
-    async def install(self) -> Awaitable:
+    def install(self) -> Awaitable:
         """Installs RDFRules locally.
 
         Returns:
@@ -60,7 +60,7 @@ class LocalHttpEngine(HttpEngine):
         
         self.__process = start_rdfrules_process()
     
-    async def start(self) -> Awaitable:
+    def start(self) -> Awaitable:
         """
         Starts the local HTTP engine.
         Spawns a JVM process in thebackground.
@@ -69,9 +69,9 @@ class LocalHttpEngine(HttpEngine):
             Awaitable: Returns a non-blocking future.
         """
         
-        await super().start()
+        super().start()
         
-        await self.install()
+        self.install()
         
         set_jvm_env()
         
@@ -79,13 +79,14 @@ class LocalHttpEngine(HttpEngine):
         
         self.api = HTTPRDFRulesApi(
             HTTPRDFRulesApiContext(
-                Url(get_server_url())
+                Url(get_server_url()),
+                self.config
             )
         )
         
         pass
     
-    async def stop(self) -> Awaitable:
+    def stop(self) -> Awaitable:
         """
         Stops the engine.
         """

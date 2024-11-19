@@ -6,7 +6,7 @@ from pyrdfrules.rdfgraph import RDFGraph
 
 class PredictionTasksTransformations(BaseTransformations):
     
-    async def filter(self) -> Awaitable[PredictionTasks]:
+    def filter(self) -> Awaitable[PredictionTasks]:
         """Return a new PredictionTasks object with filtered prediction tasks.
         
         Returns:
@@ -14,7 +14,7 @@ class PredictionTasksTransformations(BaseTransformations):
         """
         pass
     
-    async def shrink(self) -> Awaitable[PredictionTasks]:
+    def shrink(self) -> Awaitable[PredictionTasks]:
         """Return a new RDFGraph object with updated triples.
         
         Returns:
@@ -22,7 +22,7 @@ class PredictionTasksTransformations(BaseTransformations):
         """
         pass
     
-    async def select_candidates(self) -> Awaitable[RDFGraph]:
+    def select_candidates(self) -> Awaitable[RDFGraph]:
         """Select candidates from each prediction task by a selection strategy.
         
         Returns:
@@ -30,7 +30,7 @@ class PredictionTasksTransformations(BaseTransformations):
         """
         pass
     
-    async def to_prediction(self) -> Awaitable[Prediction]:
+    def to_prediction(self) -> Awaitable[Prediction]:
         """Convert this object back to the Prediction object.
         
         Returns:
@@ -38,7 +38,7 @@ class PredictionTasksTransformations(BaseTransformations):
         """
         pass
 
-    async def to_dataset(self) -> Awaitable[RDFGraph]:
+    def to_dataset(self) -> Awaitable[RDFGraph]:
         """Return a new RDFGraph object with updated triples.
         
         Returns:

@@ -11,6 +11,7 @@ import os
 import sys
 from io import StringIO
 
+from pyrdfrules.common.logging.logger import log
 from pyrdfrules.engine.exception.failed_to_start_exception import FailedToStartException
 
 started = False
@@ -41,7 +42,7 @@ def install_rdfrules(path: str = '') -> bool:
     pass
 
 def read_output_stdout(pipe, process):
-    print("Reading output")
+    log().debug("Reading output")
     
     try:
         for line in iter(process.stdout.readline, b''):
@@ -64,7 +65,7 @@ def read_output_stderr(pipe, process):
 def start_rdfrules(pipe):
     path = os.path.abspath('../src/rdfrules')
     
-    print(f"Starting RDFRules at {path}")
+    log().info(f"Starting RDFRules at {path}")
     
     command = [
         "java",
@@ -101,7 +102,7 @@ def wait_for_pipe(pipe):
     while True:
         try:
             recv = pipe.recv().strip()
-            print(recv)
+            log().debug(recv)
             
             if recv.startswith("Server online at"):
                 server_url = recv.split(" ")[-1]
@@ -128,9 +129,11 @@ def start_rdfrules_process():
     # TODO - Parse output for a better error message - port in use etc
     
     if not started:
+        log().critical("RDFRules process did not start")
         raise FailedToStartException("RDFRules process did not start")
     
-    print("Started RDFRules process")
+    
+    log().debug("Started RDFRules process")
     
     return proc
 
@@ -138,4 +141,5 @@ def get_server_url():
     return server_url
 
 def stop_rdfrules_process():
+    log().info("Stopping RDFRules process")
     os.killpg(os.getpgid(result_process), 15)

@@ -4,6 +4,7 @@ from pydantic_core import Url
 from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
 from pyrdfrules.common.http.get_http_client import get_http_client_instance
 from pyrdfrules.common.http.http_client import HttpClient
+from pyrdfrules.config import Config
 
 class HTTPRDFRulesApiContext(RDFRulesApiContext):
     
@@ -15,11 +16,16 @@ class HTTPRDFRulesApiContext(RDFRulesApiContext):
     """HTTP client instance.
     """
     
-    def __init__(self, url: Url) -> None:
+    config: Config
+    """Configuration.
+    """
+    
+    def __init__(self, url: Url, config: Config) -> None:
         super().__init__()
         self.url = url
         self.client = get_http_client_instance(
-            url
+            url,
+            config
         )
         
     def get_url(self) -> Url:

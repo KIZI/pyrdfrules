@@ -6,7 +6,7 @@ from pyrdfrules.index import Index
 
 class IndexActions(BaseActions):
     
-    async def properties_cardinality(self) -> Awaitable[Ruleset]:
+    def properties_cardinality(self) -> Awaitable[Ruleset]:
         """Get cardinalities from selected properties (such as size, domain, range).
         
         Returns:

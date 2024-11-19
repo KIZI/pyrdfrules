@@ -4,7 +4,7 @@ from pyrdfrules.rdfgraph import RDFGraph
 
 class RulesetActions(BaseActions):
     
-    async def get(self) -> Awaitable[RDFGraph]:
+    def get(self) -> Awaitable[RDFGraph]:
         """Get and show all mined rules.
         
         Returns:
@@ -13,7 +13,7 @@ class RulesetActions(BaseActions):
         pass
     
     
-    async def export(self) -> Awaitable[RDFGraph]:
+    def export(self) -> Awaitable[RDFGraph]:
         """Export this Ruleset object into a file in some selected output format.
         
         Returns:

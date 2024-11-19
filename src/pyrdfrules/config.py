@@ -1,3 +1,4 @@
+import logging
 from pydantic import BaseModel, PositiveInt
 
 
@@ -17,4 +18,8 @@ class Config(BaseModel):
     
     log_output: bool = True
     """Logs output to the console.
+    """
+    
+    log_level: int = logging.INFO
+    """Logging level.
     """

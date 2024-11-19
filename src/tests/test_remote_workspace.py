@@ -1,3 +1,4 @@
+import logging
 import time
 import unittest
 
@@ -7,9 +8,9 @@ import pyrdfrules.application
 from pyrdfrules.common.task.task import Task
 from pyrdfrules.config import Config
 
-class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
+class TestRemoteWorkspace(unittest.IsolatedAsyncioTestCase):
         
-    def skip_test_runs_workspace(self):
+    def test_runs_workspace(self):
         """
         Check if the application runs with a workspace, does not crash and terminates correctly.
         """
@@ -25,9 +26,9 @@ class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
         
         app.stop()
         
-    def test_runs_task(self):
+    def test_workspacek(self):
         """
-        Check if the application runs with a task, does not crash and terminates correctly.
+        Check if the application can upload a file to the workspace.
         """
         
         app = pyrdfrules.application.Application()
@@ -35,23 +36,16 @@ class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
         rdfrules = app.start_remote(
             url = Url("http://rdfrules.vse.cz/api/"),
             config=Config(
-                task_update_interval_ms=1000
+                task_update_interval_ms=1000,
+                log_level=logging.DEBUG
             )
         )
         
         self.assertIsNotNone(rdfrules, "Should not be None")
-        
-        task : Task = None
-        
-        with open("./tests/data/task.json", "r") as file:        
-            task_json_from_file = file.read()
-            task = rdfrules.task.create_task_from_string(task_json_from_file)
-            self.assertIsNotNone(task, "Should not be None")
-            
-        rdfrules.task.run_task(task)
-        
-        print("Finished task")
-        print(task.result)
+                
+        with open("./tests/data/asset.txt", "r") as file:        
+            file_contents = file.read()
+            rdfrules.workspace.upload_file("tests/asset.txt", file_contents)
             
         #for i in range(10):
         #    progress = rdfrules.task.get_task_by_id(task.id)

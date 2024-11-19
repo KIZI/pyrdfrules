@@ -2,6 +2,7 @@ import json
 from typing import Awaitable
 
 from pyrdfrules.api.rdfrules_api import RDFRulesApi
+from pyrdfrules.config import Config
 from pyrdfrules.engine.result.pipeline import PipelineRunResult
 
 def ensure_started(func):
@@ -19,7 +20,11 @@ class Engine():
     
     api: RDFRulesApi
     
-    async def start(self) -> Awaitable:
+    config: Config
+    """
+    Configuration of the engine."""
+    
+    def start(self) -> Awaitable:
         """
         Starts the engine.
 
@@ -37,7 +42,7 @@ class Engine():
         pass
     
     @ensure_started
-    async def check(self) -> Awaitable:
+    def check(self) -> Awaitable:
         """Returns without an exception if the instance is still running.
 
         Returns:
@@ -46,14 +51,14 @@ class Engine():
         pass
 
     @ensure_started    
-    async def stop(self) -> Awaitable:
+    def stop(self) -> Awaitable:
         """
         Stops the engine.
         """
         pass
     
     @ensure_started
-    async def launch_pipeline(self) -> Awaitable[PipelineRunResult]:
+    def launch_pipeline(self) -> Awaitable[PipelineRunResult]:
         """
         Launches the pipeline on this specific engine.
 
@@ -69,7 +74,7 @@ class Engine():
         pass
     
     @ensure_started
-    async def run_task(self, task: str|dict) -> Awaitable[None]:
+    def run_task(self, task: str|dict) -> Awaitable[None]:
         """
         Runs a task on the engine.
 

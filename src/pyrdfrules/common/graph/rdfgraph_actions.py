@@ -4,7 +4,7 @@ from pyrdfrules.rdfgraph import RDFGraph
 
 class RDFGraphActions(BaseActions):
     
-    async def get(self) -> Awaitable[RDFGraph]:
+    def get(self) -> Awaitable[RDFGraph]:
         """Get and show all triples.
         
         Returns:
@@ -12,7 +12,7 @@ class RDFGraphActions(BaseActions):
         """
         pass
     
-    async def histogram(self) -> Awaitable[RDFGraph]:
+    def histogram(self) -> Awaitable[RDFGraph]:
         """Return histogram by chosen aggregated triple items.
         
         Returns:
@@ -20,7 +20,7 @@ class RDFGraphActions(BaseActions):
         """
         pass
     
-    async def properties(self) -> Awaitable[RDFGraph]:
+    def properties(self) -> Awaitable[RDFGraph]:
         """Return information and stats about all properties.
         
         Returns:
@@ -28,7 +28,7 @@ class RDFGraphActions(BaseActions):
         """
         pass
     
-    async def export(self) -> Awaitable[RDFGraph]:
+    def export(self) -> Awaitable[RDFGraph]:
         """Export this graph into a file in some familiar RDF format.
         
         Returns:

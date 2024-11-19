@@ -11,13 +11,13 @@ class HttpEngine(Engine):
     
     api: HTTPRDFRulesApi
     
-    async def check(self) -> Awaitable:
+    def check(self) -> Awaitable:
         """Returns without an exception if the instance is still running.
 
         Returns:
             Awaitable: Non-blocking future.
         """
         
-        await self.api.workspace.get_all_files()
+        self.api.workspace.get_all_files()
         
         pass

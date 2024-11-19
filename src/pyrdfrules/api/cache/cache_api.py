@@ -9,18 +9,18 @@ class CacheApi():
         self.context = context
         pass
     
-    async def get_memory_info():
+    def get_memory_info(self):
         """Gets memory info.
         """
         
-    async def clear():
+    def clear(self):
         """Clears the cache.
         """
     
-    async def delete(key: str):
+    def delete(self, key: str):
         """Deletes a key from the cache.
         """
         
-    async def alias(key: str, alias: str):
+    def alias(self, key: str, alias: str):
         """Creates an alias for a key.
         """

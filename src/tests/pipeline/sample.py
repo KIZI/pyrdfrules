@@ -90,8 +90,8 @@ rdfrules = RDFRules(
     workspace=workspace
 )
 
-# needs to be in an async function, here just for showcase
-ruleset = await rdfrules.launch(pipeline)
+# needs to be in an function, here just for showcase
+ruleset = rdfrules.launch(pipeline)
 
 for rule in ruleset:
     print(rule.head)
@@ -102,4 +102,4 @@ for rule in ruleset:
         
         
 # logs ? we want to see some output while it's running
-# await is blocking, add option for async generator
+# is blocking, add option for generator

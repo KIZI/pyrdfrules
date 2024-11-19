@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from pydantic_core import Url
 
-from pyrdfrules.common.logging.logger import log
+from pyrdfrules.common.logging.logger import configure_logging, log
 from pyrdfrules.config import Config
 from pyrdfrules.engine.http_engine import HttpEngine
 from pyrdfrules.engine.local_http_engine import LocalHttpEngine
@@ -12,7 +12,7 @@ class Application(BaseModel):
     
     __rdfrules: RDFRules
         
-    async def start_local(self, **kwargs) -> RDFRules:
+    def start_local(self, **kwargs) -> RDFRules:
         """Starts a local instance of RDFRules.
         """
         
@@ -25,13 +25,13 @@ class Application(BaseModel):
             config=Config()
         )
         
-        await self.__rdfrules.engine.start()
+        self.__rdfrules.engine.start()
         
         log().info("Local instance of RDFRules started")
         
         return self.__rdfrules
     
-    async def start_remote(self, url: Url|str, config: Config|None = None) -> RDFRules:
+    def start_remote(self, url: Url|str, config: Config|None = None) -> RDFRules:
         """Starts a remote instance of RDFRules.
         """
         
@@ -44,12 +44,18 @@ class Application(BaseModel):
             config=Config() if config is None else config
         )
         
-        await self.__rdfrules.engine.start()
+        configure_logging(self.__rdfrules.config)
+        
+        self.__rdfrules.engine.start()
+        
+        log().info("Connected to remote instance of RDFRules at %s", url)
         
         return self.__rdfrules
     
-    async def stop(self) -> None:
+    def stop(self) -> None:
         """Stops the application.
         """
         
-        await self.__rdfrules.engine.stop()
+        log().info("Stopping RDFRules")
+        
+        self.__rdfrules.engine.stop()

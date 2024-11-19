@@ -33,7 +33,7 @@ class Ruleset(BaseModel):
     __iterator_index: int = 0
     
     def get_rules(self) -> List[Rule]:
-        # async return all rules
+        # return all rules
         pass
     
     def as_json(self) -> str:
@@ -58,4 +58,4 @@ class Ruleset(BaseModel):
     # endregion
     
     # todo - sort by functions, serialisation, deserialisation, export to some well-known formats for further analysis
-    # todo - async generator for rules
+    # todo - generator for rules

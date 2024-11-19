@@ -5,7 +5,7 @@ from pyrdfrules.index import Index
 
 class IndexTransformations(BaseTransformations):
     
-    async def mine(self) -> Awaitable[Ruleset]:
+    def mine(self) -> Awaitable[Ruleset]:
         """Execute a rule mining task with thresholds, constraints and patterns, and return a Ruleset object.
         
         Returns:

@@ -4,7 +4,7 @@ from pyrdfrules.rdfgraph import RDFGraph
 
 class RulesetTransformations(BaseTransformations):
     
-    async def filter(self) -> Awaitable[RDFGraph]:
+    def filter(self) -> Awaitable[RDFGraph]:
         """Return a new RDFGraph object with updated triples.
         
         Returns:
@@ -12,7 +12,7 @@ class RulesetTransformations(BaseTransformations):
         """
         pass
     
-    async def shrink(self) -> Awaitable[RDFGraph]:
+    def shrink(self) -> Awaitable[RDFGraph]:
         """Return a new RDFGraph object with updated triples.
         
         Returns:
@@ -20,7 +20,7 @@ class RulesetTransformations(BaseTransformations):
         """
         pass
     
-    async def sort(self) -> Awaitable[RDFGraph]:
+    def sort(self) -> Awaitable[RDFGraph]:
         """Return a new RDFGraph object with updated triples.
         
         Returns:
@@ -28,7 +28,7 @@ class RulesetTransformations(BaseTransformations):
         """
         pass
     
-    async def compute_difference(self) -> Awaitable[RDFGraph]:
+    def compute_difference(self) -> Awaitable[RDFGraph]:
         """Return a new RDFGraph object with updated triples.
         
         Returns:
@@ -36,7 +36,7 @@ class RulesetTransformations(BaseTransformations):
         """
         pass
 
-    async def make_clusters(self) -> Awaitable[RDFGraph]:
+    def make_clusters(self) -> Awaitable[RDFGraph]:
         """Return a new RDFGraph object with updated triples.
         
         Returns:
@@ -44,7 +44,7 @@ class RulesetTransformations(BaseTransformations):
         """
         pass
 
-    async def prune(self) -> Awaitable[RDFGraph]:
+    def prune(self) -> Awaitable[RDFGraph]:
         """Return a new RDFGraph object with updated triples.
         
         Returns:
@@ -52,7 +52,7 @@ class RulesetTransformations(BaseTransformations):
         """
         pass
 
-    async def predict(self) -> Awaitable[RDFGraph]:
+    def predict(self) -> Awaitable[RDFGraph]:
         """Return a new RDFGraph object with updated triples.
         
         Returns:

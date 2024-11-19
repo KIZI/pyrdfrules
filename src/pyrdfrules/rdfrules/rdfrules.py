@@ -19,6 +19,7 @@ class RDFRules():
     def __init__(self, engine: Engine, config: Config) -> None:
         self.engine = engine
         self.config = config
+        self.engine.config = config
         pass
     
     def __getattr__(self, name: str) -> Any:
@@ -28,15 +29,15 @@ class RDFRules():
         
         if name == 'task':
             # todo this can be cached
-            return TaskRunner(self.engine.api.task)
+            return TaskRunner(self.engine.api.task, self.config)
         
         pass
     
-    async def start(self) -> Awaitable:
+    def start(self) -> None:
         """
         Starts the engine.
         """
         
-        await self.engine.start()
+        self.engine.start()
         
         pass

@@ -30,7 +30,7 @@ class RemoteHttpEngine(HttpEngine):
         super().__init__()
         self.url = str(url)
     
-    async def install(self) -> Awaitable:
+    def install(self) -> Awaitable:
         """Installs RDFRules locally.
 
         Returns:
@@ -38,7 +38,7 @@ class RemoteHttpEngine(HttpEngine):
         """
         pass
     
-    async def start(self) -> Awaitable:
+    def start(self) -> Awaitable:
         """
         Starts the local HTTP engine.
         Spawns a JVM process in thebackground.
@@ -49,19 +49,20 @@ class RemoteHttpEngine(HttpEngine):
         
         # todo check if remote server is running
         
-        await super().start()
+        super().start()
         
-        await self.install()
+        self.install()
         
         self.api = HTTPRDFRulesApi(
             HTTPRDFRulesApiContext(
-                Url(self.url)
+                Url(self.url),
+                self.config
             )
         )
         
         pass
     
-    async def stop(self) -> Awaitable:
+    def stop(self) -> Awaitable:
         """
         Stops the engine.
         """
