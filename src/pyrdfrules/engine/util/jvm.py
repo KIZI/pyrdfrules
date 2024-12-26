@@ -11,22 +11,64 @@ import os
 import sys
 from io import StringIO
 
+import requests
+
 from pyrdfrules.common.logging.logger import log
 from pyrdfrules.engine.exception.failed_to_start_exception import FailedToStartException
+from pyrdfrules.rdfrules.release import JVM_VERSION, RDFRULES_DOWNLOAD_URI
 
 started = False
 result_process = None
 server_url = None
+
+_jvm_path = None
+_rdfrules_path = None
+
+def get_base_dir():
+    return os.path.abspath('../src')
+
+def setup(rdf_rules_path: str = '', jvm_path: str = '') -> None:
+    
+    if not rdf_rules_path:
+        rdf_rules_path = os.path.join(get_base_dir(), "rdfrules")
+        
+    if not jvm_path:
+        jvm_path = os.path.join(get_base_dir(), "jvm")
+    
+    global _rdfrules_path
+    _rdfrules_path = rdf_rules_path
+    
+    global _jvm_path
+    _jvm_path = jvm_path
+    
+    pass
+
+def get_jvm_path() -> str:
+    return _jvm_path
+
+def get_rdfrules_path() -> str:
+    return _rdfrules_path
+
 
 def is_jvm_installed() -> bool:
     return os.path.isdir(jdk._JRE_DIR)
 
 def install_jvm():
     if not is_jvm_installed():
-        jdk.install("11", jre=True, operating_system=jdk.OS, arch=jdk.ARCH)
+        jdk.install(JVM_VERSION, jre=True, operating_system=jdk.OS, arch=jdk.ARCH)
     
-def is_rdfrules_installed(path: str = '../src/rdfrules') -> bool:
-    return os.path.exists(path)
+def is_rdfrules_installed() -> bool:
+    
+    path = get_rdfrules_path()
+    
+    # check if the directory exists
+    shapes = [
+        'lib',
+        'bin',
+        'bin/main',
+    ]
+    
+    return all([os.path.exists(os.path.join(path, shape)) for shape in shapes])
 
 def set_jvm_env() -> None:
     java_home = "%s/%s" % (jdk._JRE_DIR, os.listdir(jdk._JRE_DIR)[0])
@@ -38,8 +80,25 @@ def set_jvm_env() -> None:
     os.environ["PATH"] = "%s/bin:%s" % (java_home, os.environ["PATH"])
     os.environ["RDFRULES_STOPPING_TOKEN"] = "stoppingtoken"
 
-def install_rdfrules(path: str = '') -> bool:
+def install_rdfrules() -> bool:
     # download compiled version
+    path = get_rdfrules_path()
+        
+    if not os.path.exists(path):
+        os.makedirs(path)
+    
+    target = os.path.join(path, 'rdfrules.zip')
+    
+    url = RDFRULES_DOWNLOAD_URI
+    r = requests.get(url, allow_redirects=True)
+    open(target, 'wb').write(r.content)
+    
+    # unzip
+    
+    import zipfile
+    with zipfile.ZipFile(target, 'r') as zip_ref:
+        zip_ref.extractall(path)
+    
     pass
 
 def read_output_stdout(pipe, process):
