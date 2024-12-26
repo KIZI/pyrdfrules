@@ -1,6 +1,6 @@
-from pydantic_core import Url
 from requests import Response, Session
 
+from pyrdfrules.common.http.url import Url
 from pyrdfrules.common.logging.logger import log
 from pyrdfrules.config import Config
 

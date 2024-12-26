@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from pydantic_core import Url
+from pyrdfrules.common.http.url import Url
 
 from pyrdfrules.common.file.workspace_file import WorkspaceFile
 from pyrdfrules.common.graph.graph import Graph

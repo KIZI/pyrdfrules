@@ -1,4 +1,4 @@
-from pydantic_core import Url
+from pyrdfrules.common.http.url import Url
 from pyrdfrules.common.http.http_client import HttpClient
 from pyrdfrules.config import Config
 

@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from pydantic_core import Url
+from pyrdfrules.common.http.url import Url
 
 from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
 from pyrdfrules.common.http.get_http_client import get_http_client_instance

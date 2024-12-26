@@ -1,4 +1,4 @@
-from pydantic_core import Url
+from pyrdfrules.common.http.url import Url
 
 from pyrdfrules.common.graph.graph import Graph
 

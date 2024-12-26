@@ -1,7 +1,7 @@
 import time
 import unittest
 
-from pydantic_core import Url
+from pyrdfrules.common.http.url import Url
 
 import pyrdfrules.application
 from pyrdfrules.common.task.task import Task

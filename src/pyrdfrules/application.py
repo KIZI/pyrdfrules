@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from pydantic_core import Url
+from pyrdfrules.common.http.url import Url
 
 from pyrdfrules.common.logging.logger import configure_logging, log
 from pyrdfrules.config import Config

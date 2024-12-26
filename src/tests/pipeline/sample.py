@@ -1,6 +1,6 @@
 from os import path
 
-from pydantic_core import Url
+from pyrdfrules.common.http.url import Url
 from pyrdfrules.common.file.workspace import Workspace
 from pyrdfrules.common.graph.remote_graph import RemoteGraph
 from pyrdfrules.common.graph.workspace_graph import WorkspaceGraph
