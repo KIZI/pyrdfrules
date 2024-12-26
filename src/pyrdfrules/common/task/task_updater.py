@@ -1,10 +1,12 @@
 import time
+from typing import Generator
 from pyrdfrules.api.task.task_api import TaskApi
 from pyrdfrules.common.task.task import Task
 from pyrdfrules.config import Config
 
-
 class TaskUpdater():
+    """Utility class that handles the updating of tasks.
+    """
     
     api: TaskApi
     """API used to interact with the RDFRules instance.
@@ -30,6 +32,15 @@ class TaskUpdater():
             self.update_task(task, response)
             yield task
             
+        pass
+    
+    def stop(self, task: Task) -> None:
+        """Stops the task.
+        """
+        
+        self.api.interrupt_task(task_id=task.id)
+        task._stop()
+        
         pass
     
     def update_task(self, task: Task, response: dict) -> Task:

@@ -47,7 +47,7 @@ class Task():
         """Checks if the task is finished.
         """
         
-        return self.status == 'finished'
+        return self.status == 'finished' or self.status == 'stopped'
     
     def update_from_dict(self, data: dict) -> None:
         """Updates the task from a dictionary.
@@ -81,3 +81,10 @@ class Task():
             self.result = data['result']
         
         self.last_updated = datetime.datetime.now()
+        
+    def _stop(self) -> None:
+        """Stops the task.
+        """
+        
+        self.status = 'stopped'
+        pass

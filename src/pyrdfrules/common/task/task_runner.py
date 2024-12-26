@@ -54,4 +54,4 @@ class TaskRunner():
         """Stops a task.
         """
         
-        self.api.interrupt_task(task_id=task.id)
+        self.task_updater.stop(task)
