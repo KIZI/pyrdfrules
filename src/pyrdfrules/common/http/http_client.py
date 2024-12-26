@@ -1,4 +1,3 @@
-from typing import Awaitable
 from pydantic_core import Url
 from requests import Response, Session
 

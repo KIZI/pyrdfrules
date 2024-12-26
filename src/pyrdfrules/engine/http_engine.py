@@ -1,4 +1,3 @@
-from typing import Awaitable
 from pydantic_core import Url
 from pyrdfrules.api.http_rdfrules_api import HTTPRDFRulesApi
 from pyrdfrules.api.rdfrules_api import RDFRulesApi
@@ -11,11 +10,8 @@ class HttpEngine(Engine):
     
     api: HTTPRDFRulesApi
     
-    def check(self) -> Awaitable:
+    def check(self) -> None:
         """Returns without an exception if the instance is still running.
-
-        Returns:
-            Awaitable: Non-blocking future.
         """
         
         self.api.workspace.get_all_files()

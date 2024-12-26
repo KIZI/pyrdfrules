@@ -1,5 +1,4 @@
 import time
-from typing import Awaitable
 from pyrdfrules.api.task.task_api import TaskApi
 from pyrdfrules.common.task.task import Task
 from pyrdfrules.config import Config
@@ -20,7 +19,7 @@ class TaskUpdater():
         self.config = config
         pass
     
-    def run(self, task: Task) -> Awaitable[None]:
+    def run(self, task: Task) -> Generator[Task]:
         """Runs the task.
         """
         
@@ -29,13 +28,23 @@ class TaskUpdater():
             
             response = self.api.get_task_response(task.id)
             self.update_task(task, response)
+            yield task
             
         pass
     
-    def update_task(self, task: Task, response: dict) -> Awaitable[Task]:
+    def update_task(self, task: Task, response: dict) -> Task:
         """Updates a task.
         """
         
         task.update_from_dict(response)
         
         return task
+    
+    def run_task_step(self, task: Task) -> None:
+        """Runs a task step. Raises exceptions if the task is finished.
+        """
+        
+        response = self.api.get_task_response(task.id)
+        self.update_task(task, response)
+        
+        pass

@@ -1,4 +1,3 @@
-from typing import Awaitable
 from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
 from pyrdfrules.common.pipeline.pipeline import Pipeline
 from pyrdfrules.common.task.task import Task
@@ -12,19 +11,19 @@ class TaskApi():
         self.context = context
         pass
     
-    def create_task(self, task: Pipeline|dict|str) -> Awaitable[Task]:
+    def create_task(self, task: Pipeline|dict|str) -> Task:
         """Creates a task.
 
         Args:
             task (Pipeline | dict | str): Task to create.
 
         Returns:
-            Awaitable[Task]: Created task.
+            Task: Created task.
         """
         
         pass
     
-    def get_task(self, task_id: str = None, task: Task = None) -> Awaitable[Task]:
+    def get_task(self, task_id: str = None, task: Task = None) -> Task:
         """Get a task, or update status of an existing task.
 
         Args:
@@ -35,7 +34,7 @@ class TaskApi():
             ValueError: If task_id or task is not provided.
 
         Returns:
-            Awaitable[Task]: Retrieved task.
+            Task: Retrieved task.
         """
         
         if task_id is None and task is None:

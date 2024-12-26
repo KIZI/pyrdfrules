@@ -1,6 +1,5 @@
 from datetime import datetime
 import json
-from typing import Awaitable
 from pyrdfrules.api.http_api_urls import TASK_CREATE_URL, TASK_READ_URL, TASK_INTERRUPT_URL
 from pyrdfrules.api.http_rdfrules_api_context import HTTPRDFRulesApiContext
 from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
@@ -19,14 +18,14 @@ class TaskHttpApi(TaskApi):
         super().__init__(context)
         pass
 
-    def create_task(self, task: Pipeline|dict|str) -> Awaitable[Task]:
+    def create_task(self, task: Pipeline|dict|str) -> Task:
         """Creates a task.
 
         Args:
             task (Pipeline | dict | str): Task to create.
 
         Returns:
-            Awaitable[Task]: Created task.
+            Task: Created task.
         """
         
         if isinstance(task, Pipeline):
@@ -50,7 +49,7 @@ class TaskHttpApi(TaskApi):
             started=datetime.fromisoformat(data['started'])
         )
     
-    def get_task(self, task_id: str = None, task: Task = None) -> Awaitable[Task]:
+    def get_task(self, task_id: str = None, task: Task = None) -> Task:
         super().get_task(task_id, task)
         
         task_id = task_id or task.id
@@ -64,7 +63,7 @@ class TaskHttpApi(TaskApi):
             started=datetime.fromisoformat(data['started'])
         )
         
-    def get_task_response(self, task_id: str) -> Awaitable[dict]:
+    def get_task_response(self, task_id: str) -> dict:
         response = self.context.get_http_client().get(
             TASK_READ_URL.format(task_id = task_id)
         )

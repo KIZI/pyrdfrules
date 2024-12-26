@@ -1,3 +1,4 @@
+from typing import Generator
 from pyrdfrules.api.task.task_api import TaskApi
 from pyrdfrules.common.logging.logger import log
 from pyrdfrules.common.task.task import Task
@@ -31,11 +32,11 @@ class TaskRunner():
         
         return task
     
-    def run_task(self, task: Task) -> None:
+    def run_task(self, task: Task) -> Generator[Task]:
         """Runs the task to completion.
         """
         
-        self.task_updater.run(task)
+        yield from self.task_updater.run(task)
     
     def get_task_by_id(self, task_id: str) -> Task:
         """Get a task, or update status of an existing task.

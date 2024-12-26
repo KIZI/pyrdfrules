@@ -1,22 +1,21 @@
-from typing import Awaitable
 from pyrdfrules.common.base_actions import BaseActions
 from pyrdfrules.rdfgraph import RDFGraph
 
 class PredictionActions(BaseActions):
     
-    def get(self) -> Awaitable[RDFGraph]:
+    def get(self) -> RDFGraph:
         """Get and show predicted triples with bound rules.
         
         Returns:
-            Awaitable[Self]: Get and show all triples.
+            Self: Get and show all triples.
         """
         pass
     
-    def export(self) -> Awaitable[RDFGraph]:
+    def export(self) -> RDFGraph:
         """Export this graph into a file in some familiar RDF format.
         
         Returns:
-            Awaitable[Self]: Export.
+            Self: Export.
         """
         pass
     

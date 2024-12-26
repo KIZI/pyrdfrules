@@ -39,6 +39,7 @@ def set_jvm_env() -> None:
     os.environ["RDFRULES_STOPPING_TOKEN"] = "stoppingtoken"
 
 def install_rdfrules(path: str = '') -> bool:
+    # download compiled version
     pass
 
 def read_output_stdout(pipe, process):
@@ -53,7 +54,6 @@ def read_output_stdout(pipe, process):
         pass
     
 def read_output_stderr(pipe, process):
-    
     try:
         for line in iter(process.stderr.readline, b''):
             pipe.send(line.strip())

@@ -18,6 +18,9 @@ class Application(BaseModel):
         
         log().info("Starting local RDFRules")
         
+        # todo - add optional path to RDFRules
+        # todo - add JVM path
+        
         self.__rdfrules = RDFRules(
             engine=LocalHttpEngine(
                 kwargs

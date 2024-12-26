@@ -1,5 +1,4 @@
 from multiprocessing import Process
-from typing import Awaitable
 
 from pydantic_core import Url
 from pyrdfrules.api.http_rdfrules_api import HTTPRDFRulesApi
@@ -39,11 +38,8 @@ class LocalHttpEngine(HttpEngine):
         self.install_jvm = install_jvm
         self.install_rdfrules = install_rdfrules
     
-    def install(self) -> Awaitable:
+    def install(self) -> None:
         """Installs RDFRules locally.
-
-        Returns:
-            Awaitable: Non-blocking future when the installation process finishes.
         """
         if not is_jvm_installed() and self.install_jvm:
             install_jvm()
@@ -60,13 +56,10 @@ class LocalHttpEngine(HttpEngine):
         
         self.__process = start_rdfrules_process()
     
-    def start(self) -> Awaitable:
+    def start(self) -> None:
         """
         Starts the local HTTP engine.
         Spawns a JVM process in thebackground.
-
-        Returns:
-            Awaitable: Returns a non-blocking future.
         """
         
         super().start()
@@ -86,7 +79,7 @@ class LocalHttpEngine(HttpEngine):
         
         pass
     
-    def stop(self) -> Awaitable:
+    def stop(self) -> None:
         """
         Stops the engine.
         """

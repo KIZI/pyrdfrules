@@ -1,38 +1,37 @@
-from typing import Awaitable
 from pyrdfrules.common.base_actions import BaseActions
 from pyrdfrules.rdfgraph import RDFGraph
 
 class RDFGraphActions(BaseActions):
     
-    def get(self) -> Awaitable[RDFGraph]:
+    def get(self) -> RDFGraph:
         """Get and show all triples.
         
         Returns:
-            Awaitable[Self]: Get and show all triples.
+            Self: Get and show all triples.
         """
         pass
     
-    def histogram(self) -> Awaitable[RDFGraph]:
+    def histogram(self) -> RDFGraph:
         """Return histogram by chosen aggregated triple items.
         
         Returns:
-            Awaitable[Self]: Histogram.
+            Self: Histogram.
         """
         pass
     
-    def properties(self) -> Awaitable[RDFGraph]:
+    def properties(self) -> RDFGraph:
         """Return information and stats about all properties.
         
         Returns:
-            Awaitable[Self]: Histogram.
+            Self: Histogram.
         """
         pass
     
-    def export(self) -> Awaitable[RDFGraph]:
+    def export(self) -> RDFGraph:
         """Export this graph into a file in some familiar RDF format.
         
         Returns:
-            Awaitable[Self]: Export.
+            Self: Export.
         """
         pass
     

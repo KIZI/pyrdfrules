@@ -1,4 +1,3 @@
-from typing import Awaitable
 from pydantic import BaseModel
 
 class UsedMemory(BaseModel):

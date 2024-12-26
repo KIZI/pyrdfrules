@@ -1,5 +1,4 @@
 import datetime
-from typing import Awaitable
 
 from pyrdfrules.common.event.event_dispatcher import EventDispatcher
 from pyrdfrules.common.task.event.task_finished_message import TaskFinishedMessage

@@ -1,5 +1,4 @@
 from multiprocessing import Process
-from typing import Awaitable
 
 from pydantic_core import Url
 from pyrdfrules.api.http_rdfrules_api import HTTPRDFRulesApi
@@ -30,21 +29,15 @@ class RemoteHttpEngine(HttpEngine):
         super().__init__()
         self.url = str(url)
     
-    def install(self) -> Awaitable:
+    def install(self) -> None:
         """Installs RDFRules locally.
-
-        Returns:
-            Awaitable: Non-blocking future when the installation process finishes.
         """
         pass
     
-    def start(self) -> Awaitable:
+    def start(self) -> None:
         """
         Starts the local HTTP engine.
         Spawns a JVM process in thebackground.
-
-        Returns:
-            Awaitable: Returns a non-blocking future.
         """
         
         # todo check if remote server is running
@@ -62,7 +55,7 @@ class RemoteHttpEngine(HttpEngine):
         
         pass
     
-    def stop(self) -> Awaitable:
+    def stop(self) -> None:
         """
         Stops the engine.
         """

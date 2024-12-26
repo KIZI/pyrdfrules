@@ -1,5 +1,4 @@
 import json
-from typing import Awaitable
 
 from pyrdfrules.api.rdfrules_api import RDFRulesApi
 from pyrdfrules.config import Config
@@ -24,12 +23,9 @@ class Engine():
     """
     Configuration of the engine."""
     
-    def start(self) -> Awaitable:
+    def start(self) -> None:
         """
         Starts the engine.
-
-        Returns:
-            Awaitable: Returns a future.
         """
         pass
     
@@ -42,23 +38,20 @@ class Engine():
         pass
     
     @ensure_started
-    def check(self) -> Awaitable:
+    def check(self) -> None:
         """Returns without an exception if the instance is still running.
-
-        Returns:
-            Awaitable: Non-blocking future.
         """
         pass
 
     @ensure_started    
-    def stop(self) -> Awaitable:
+    def stop(self) -> None:
         """
         Stops the engine.
         """
         pass
     
     @ensure_started
-    def launch_pipeline(self) -> Awaitable[PipelineRunResult]:
+    def launch_pipeline(self) -> PipelineRunResult:
         """
         Launches the pipeline on this specific engine.
 
@@ -66,7 +59,7 @@ class Engine():
             pipeline (Pipeline): Pipeline specification to run.
 
         Returns:
-            Awaitable[PipelineRunResult]: Returns a non-blocking future.
+            PipelineRunResult: Returns a non-blocking future.
             
         Throws:    
         
@@ -74,15 +67,12 @@ class Engine():
         pass
     
     @ensure_started
-    def run_task(self, task: str|dict) -> Awaitable[None]:
+    def run_task(self, task: str|dict) -> None:
         """
         Runs a task on the engine.
 
         Args:
             task (str|dict): Task to run, either string-serialized JSON or JSON represented as a dict.
-
-        Returns:
-            Awaitable[None]: Returns a non-blocking future.
         """
         
         # todo custom exception

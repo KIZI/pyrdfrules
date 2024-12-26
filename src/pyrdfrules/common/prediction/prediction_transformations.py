@@ -1,54 +1,53 @@
-from typing import Awaitable
 from pyrdfrules.common.base_transformations import BaseTransformations
 from pyrdfrules.prediction import Prediction
 from pyrdfrules.rdfgraph import RDFGraph
 
 class PredictionTransformations(BaseTransformations):
 
-    def filter(self) -> Awaitable[Prediction]:
+    def filter(self) -> Prediction:
         """Returns a new Prediction object with filtered predicted triples by measures of significance, rule patterns, triple filters and other options.
 
         Returns:
-            Awaitable[Self]: Shrinked RDFGraph object.
+            Self: Shrinked RDFGraph object.
         """
         pass
     
-    def shrink(self) -> Awaitable[Prediction]:
+    def shrink(self) -> Prediction:
         """Returns a new shrinked Prediction object.
 
         Returns:
-            Awaitable[Self]: Shrinked RDFGraph object.
+            Self: Shrinked RDFGraph object.
         """
         pass
     
-    def sort(self) -> Awaitable[Prediction]:
+    def sort(self) -> Prediction:
         """Returns a new Prediction object with sorted predicted triples by their rules and their measures of significance.
 
         Returns:
-            Awaitable[Self]: Shrinked RDFGraph object.
+            Self: Shrinked RDFGraph object.
         """
         pass
     
-    def group(self) -> Awaitable[Prediction]:
+    def group(self) -> Prediction:
         """Aggregates and scores triples predicted by many rules.
 
         Returns:
-            Awaitable[Self]: Shrinked RDFGraph object.
+            Self: Shrinked RDFGraph object.
         """
         pass
     
-    def to_prediction_tasks(self) -> Awaitable[RDFGraph]:
+    def to_prediction_tasks(self) -> RDFGraph:
         """Generate prediction tasks by a user-defined strategy.
 
         Returns:
-            Awaitable[Self]: Shrinked RDFGraph object.
+            Self: Shrinked RDFGraph object.
         """
         pass
     
-    def to_dataset(self) -> Awaitable[RDFGraph]:
+    def to_dataset(self) -> RDFGraph:
         """Transform all predicted triples into the RDFGraph object.
 
         Returns:
-            Awaitable[Self]: Shrinked RDFGraph object.
+            Self: Shrinked RDFGraph object.
         """
         pass

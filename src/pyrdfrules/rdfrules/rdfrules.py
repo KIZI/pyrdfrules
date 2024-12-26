@@ -1,4 +1,4 @@
-from typing import Any, Awaitable
+from typing import Any
 
 from pyrdfrules.api.workspace.workspace_api import WorkspaceApi
 from pyrdfrules.common.file.workspace import Workspace

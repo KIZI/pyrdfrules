@@ -47,6 +47,8 @@ class TestRemoteWorkspace(unittest.IsolatedAsyncioTestCase):
             file_contents = file.read()
             rdfrules.workspace.upload_file("tests/asset.txt", file_contents)
             
+        rdfrules.workspace.delete_file("tests/asset.txt")
+            
         #for i in range(10):
         #    progress = rdfrules.task.get_task_by_id(task.id)
         #    self.assertIsNotNone(progress, "Should not be None")

@@ -32,7 +32,7 @@ class TestLocalApplication(unittest.IsolatedAsyncioTestCase):
         )
         
         self.assertIsNotNone(rdfrules, "Should not be None")
-        rdfrules.engine.check()
+        rdfrules.engine.check() # todo - make this work
         
         app.stop()
 
