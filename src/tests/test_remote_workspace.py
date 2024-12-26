@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 import unittest
 
@@ -8,7 +9,7 @@ import pyrdfrules.application
 from pyrdfrules.common.task.task import Task
 from pyrdfrules.config import Config
 
-class TestRemoteWorkspace(unittest.IsolatedAsyncioTestCase):
+class TestRemoteWorkspace(unittest.TestCase):
         
     def test_runs_workspace(self):
         """
@@ -26,12 +27,14 @@ class TestRemoteWorkspace(unittest.IsolatedAsyncioTestCase):
         
         app.stop()
         
-    def test_workspacek(self):
+    def test_workspace_upload(self):
         """
         Check if the application can upload a file to the workspace.
         """
         
         app = pyrdfrules.application.Application()
+        
+        path = os.path.join(os.path.dirname((os.path.realpath(__file__))), "data/asset.txt")
         
         rdfrules = app.start_remote(
             url = Url("http://rdfrules.vse.cz/api/"),
@@ -43,17 +46,11 @@ class TestRemoteWorkspace(unittest.IsolatedAsyncioTestCase):
         
         self.assertIsNotNone(rdfrules, "Should not be None")
                 
-        with open("./tests/data/asset.txt", "r") as file:        
-            file_contents = file.read()
-            rdfrules.workspace.upload_file("tests/asset.txt", file_contents)
+        with open(path, "r") as file:        
+            #file_contents = file.read()
+            rdfrules.workspace.upload_file("data/asset.txt", file)
             
-        rdfrules.workspace.delete_file("tests/asset.txt")
-            
-        #for i in range(10):
-        #    progress = rdfrules.task.get_task_by_id(task.id)
-        #    self.assertIsNotNone(progress, "Should not be None")
-        #    print(progress)
-        #    time.sleep(10)
+        rdfrules.workspace.delete_file("data/asset.txt")
         
         app.stop()
 

@@ -32,7 +32,7 @@ class TaskRunner():
         
         return task
     
-    def run_task(self, task: Task) -> Generator[Task]:
+    def run_task(self, task: Task) -> Generator[Task, None, None]:
         """Runs the task to completion.
         """
         

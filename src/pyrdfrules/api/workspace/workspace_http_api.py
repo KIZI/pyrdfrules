@@ -12,6 +12,15 @@ class WorkspaceHttpApi(WorkspaceApi):
         super().__init__(context)
         pass
     
+    def normalize_path(self, path: str) -> str:
+        """Normalize the path.
+        """
+        
+        if not path.startswith('/'):
+            path = '/' + path
+        
+        return path
+    
     def get_all_files(self) -> dict:
         """Get all files and directories recursively from the workspace directory.
         """
@@ -24,7 +33,7 @@ class WorkspaceHttpApi(WorkspaceApi):
         """Get the file content.
         """
         
-        response = self.context.get_http_client().get(WORKSPACE_URL + path)
+        response = self.context.get_http_client().get(WORKSPACE_URL + self.normalize_path(path))
         
         if response.status_code == 404:
             raise WorkspaceFileNotFoundException(path)
@@ -35,7 +44,7 @@ class WorkspaceHttpApi(WorkspaceApi):
         """Delete a file.
         """
         
-        response = self.context.get_http_client().delete(WORKSPACE_URL + path)
+        response = self.context.get_http_client().delete(WORKSPACE_URL + self.normalize_path(path))
         
         if response.status_code == 404:
             raise WorkspaceFileNotFoundException(path)
@@ -52,9 +61,19 @@ class WorkspaceHttpApi(WorkspaceApi):
         if path.endswith('/'):
             raise Exception('Cannot upload to a directory')
         
+        name = path.split('/')[-1]
+        directory = path[:-(len(name) + 1)]
+        
         response = self.context.get_http_client().post(
-            WORKSPACE_URL + path,
-            data=content
+            WORKSPACE_URL + self.normalize_path(path),
+            data={"directory": directory},
+            files={"file": ("asset.txt", content)},
         )
         
-        return response.json()
+        if response.status_code not in [200, 201]:
+            raise WorkspaceFileNotFoundException(path)
+        
+        if response.text != "uploaded":
+            raise Exception("Upload failed")
+
+        return

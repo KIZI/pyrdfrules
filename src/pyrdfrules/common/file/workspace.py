@@ -29,7 +29,7 @@ class Workspace():
         
         return tree
     
-    def upload_file(self, path: Path | str, data: str|bytes = None) -> None:
+    def upload_file(self, path: Path | str, data : bytes = None) -> None:
         """Uploads a file to the workspace.
 
         Args:

@@ -10,22 +10,33 @@ from pyrdfrules.rdfrules.rdfrules import RDFRules
 
 class Application(BaseModel):
     
-    __rdfrules: RDFRules
+    __rdfrules: RDFRules|None = None
         
-    def start_local(self, **kwargs) -> RDFRules:
+    def start_local(self, config: Config|None = None, **kwargs) -> RDFRules:
         """Starts a local instance of RDFRules.
+        
+        Args:
+            config: The configuration to use.
+            **kwargs: Additional arguments.
+            
+        Returns:
+            The RDFRules instance.
+        
         """
         
         log().info("Starting local RDFRules")
+        
+        config = Config() if config is None else config
         
         # todo - add optional path to RDFRules
         # todo - add JVM path
         
         self.__rdfrules = RDFRules(
             engine=LocalHttpEngine(
-                kwargs
+                config=config,
+                **kwargs
             ),
-            config=Config()
+            config=config
         )
         
         self.__rdfrules.engine.start()
@@ -40,11 +51,14 @@ class Application(BaseModel):
         
         log().info("Connecting to remote instance of RDFRules at %s", url)
         
+        config = Config() if config is None else config
+        
         self.__rdfrules = RDFRules(
             engine=RemoteHttpEngine(
+                config=config,
                 url=url
             ),
-            config=Config() if config is None else config
+            config=config
         )
         
         configure_logging(self.__rdfrules.config)

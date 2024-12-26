@@ -23,6 +23,10 @@ class Engine():
     """
     Configuration of the engine."""
     
+    def __init__(self, config: Config) -> None:
+        self.config = config
+        pass
+    
     def start(self) -> None:
         """
         Starts the engine.

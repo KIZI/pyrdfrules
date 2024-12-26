@@ -21,7 +21,7 @@ class TaskUpdater():
         self.config = config
         pass
     
-    def run(self, task: Task) -> Generator[Task]:
+    def run(self, task: Task) -> Generator[Task, None, None]:
         """Runs the task.
         """
         
