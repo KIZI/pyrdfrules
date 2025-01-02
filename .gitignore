@@ -1,6 +1,6 @@
 dist/
 .vscode/
-src/rdfrules
+src/rdfrules*
 jdk
 sample/
 venv/
