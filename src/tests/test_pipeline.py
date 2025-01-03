@@ -158,6 +158,8 @@ class TestPipeline(unittest.TestCase):
             print(step)
             self.assertIsNotNone(step, "Should not be None")
         
+        print(task.result)
+        
         app.stop()
 
 if __name__ == '__main__':

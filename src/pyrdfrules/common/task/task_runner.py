@@ -51,7 +51,7 @@ class TaskRunner():
         return task
     
     def run_task(self, task: Task) -> Generator[Task, None, None]:
-        """Runs the task to completion.
+        """Runs a task step.
         """
         
         yield from self.task_updater.run(task)

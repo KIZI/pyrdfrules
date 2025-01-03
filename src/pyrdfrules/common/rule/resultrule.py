@@ -6,7 +6,7 @@ from pyrdfrules.common.rule.measure.measure import RuleMeasure
 from pyrdfrules.common.rule.rule.body import RuleBody
 from pyrdfrules.common.rule.rule.head import RuleHead
 
-class Rule(BaseModel):
+class ResultRule(BaseModel):
     """
     Rule mined by RDFRules.
     """
@@ -14,7 +14,7 @@ class Rule(BaseModel):
     """
     Represents the list of the parts of the rule in its body.
     """
-    body: RuleBody
+    body: List[RuleBody]
     
     """
     Head of the rule.
