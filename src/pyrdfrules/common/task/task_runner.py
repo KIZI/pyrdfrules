@@ -4,6 +4,7 @@ from pyrdfrules.common.logging.logger import log
 from pyrdfrules.common.task.task import Task
 from pyrdfrules.common.task.task_updater import TaskUpdater
 from pyrdfrules.config import Config
+from pyrdfrules.rdfrules.pipeline import Pipeline
 
 
 class TaskRunner():
@@ -21,14 +22,31 @@ class TaskRunner():
         
         pass
     
+    def create_task(self, pipeline: Pipeline) -> Task:
+        """Creates a task.
+        """
+        
+        task = self.api.create_task(pipeline)
+        
+        self.add_task_log_message_listener(task)
+        
+        return task
+    
+    def add_task_log_message_listener(self, task: Task) -> None:
+        """Adds a listener to the task log messages.
+        """
+        
+        task.on_log_message += lambda message: log().info(message)
+        task.on_finished += lambda message: log().info('Task finished')
+        
+    
     def create_task_from_string(self, task: str) -> Task:
         """Creates a task.
         """
         
         task = self.api.create_task(task)
         
-        task.on_log_message += lambda message: log().info(message)
-        task.on_finished += lambda message: log().info('Task finished')
+        self.add_task_log_message_listener(task)
         
         return task
     

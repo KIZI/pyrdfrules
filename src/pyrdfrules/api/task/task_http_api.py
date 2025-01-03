@@ -6,8 +6,8 @@ from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
 from pyrdfrules.api.task.exception.task_not_found_exception import TaskNotFoundException
 from pyrdfrules.api.task.task_api import TaskApi
 from pyrdfrules.common.logging.logger import log
-from pyrdfrules.common.pipeline.pipeline import Pipeline
 from pyrdfrules.common.task.task import Task
+from pyrdfrules.rdfrules.pipeline import Pipeline
 
 
 class TaskHttpApi(TaskApi):
@@ -29,6 +29,7 @@ class TaskHttpApi(TaskApi):
         """
         
         if isinstance(task, Pipeline):
+            task = task.model_dump()
             pass
         elif isinstance(task, dict):
             pass

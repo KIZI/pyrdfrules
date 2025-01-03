@@ -1,6 +1,6 @@
 from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
-from pyrdfrules.common.pipeline.pipeline import Pipeline
 from pyrdfrules.common.task.task import Task
+from pyrdfrules.rdfrules.pipeline import Pipeline
 
 
 class TaskApi():
