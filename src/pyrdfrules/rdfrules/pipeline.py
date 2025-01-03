@@ -4,8 +4,18 @@ from typing import List, Literal, Optional, Union
 from pydantic import AnyUrl, BaseModel, model_serializer
 from enum import Enum
 
-from pyrdfrules.rdfrules.commondata import ConfidenceType, SupportType, Threshold
+from pyrdfrules.rdfrules.commondata import ConfidenceType, Constraint, RuleConsumer, SupportType, Threshold
 from pyrdfrules.rdfrules.jsonformats import PrefixFull
+
+
+class Pipeline(BaseModel):
+    tasks: List[RDFRulesTaskModel]
+    
+    @model_serializer()
+    def serialize_model(self):
+        return self.tasks
+    
+    pass
 
 class RDFRulesTaskModel(BaseModel):
 
@@ -27,6 +37,7 @@ class LoadGraph(RDFRulesTaskModel):
     graphName: Optional[str] = None
     path: Optional[str] = None
     url: Optional[AnyUrl] = None
+    settings: Optional[str] = None
 
 
 class LoadDataset(RDFRulesTaskModel):
@@ -232,9 +243,14 @@ class DiscretizeTask(RDFRulesTaskModel):
 class Mine(RDFRulesTaskModel):
     name: Literal["Mine"] = "Mine"
     
-    mining: dict = {}
-    ruleConsumers: List[dict] = []
+    mining: Optional[dict] = None
+    ruleConsumers: List[RuleConsumer] = []
     thresholds: List[Threshold] = []
+    patterns: Optional[List] = None
+    
+    constraints: List[Constraint] = []
+    
+    parallelism: Optional[int] = None
 
 
 class LoadRuleset(RDFRulesTaskModel):
@@ -363,6 +379,20 @@ class ComputeConfidence(RDFRulesTaskModel):
     min: Optional[float] = None
     topk: Optional[int] = None
     
+    
+    @model_serializer()
+    def serialize_model(self):
+        parameters = {}
+        
+        for key, value in vars(self).items():
+            if key != 'name' and value is not None:
+                
+                if key == 'confidenceType':
+                    parameters["name"] = value
+                else:
+                    parameters[key] = value
+
+        return {'name': self.name, 'parameters': parameters}
 
 
 class ComputeSupport(RDFRulesTaskModel):

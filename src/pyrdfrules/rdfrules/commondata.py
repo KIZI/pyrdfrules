@@ -1,8 +1,22 @@
 from __future__ import annotations
 
 from typing import List, Optional, Union
-from pydantic import AnyUrl, BaseModel
+from pydantic import AnyUrl, BaseModel, model_serializer
 from enum import Enum
+
+class DataItemModel(BaseModel):
+
+    @model_serializer()
+    def serialize_model(self):
+        
+        parameters = {}
+        
+        for key, value in vars(self).items():
+            if value is not None:
+                parameters[key] = value
+
+        return parameters
+    pass
 
 
 class TripleItem(BaseModel):
@@ -65,7 +79,7 @@ class RDFFormat(str, Enum):
     TRIX = "trix"
 
 
-class Threshold(BaseModel):
+class Threshold(DataItemModel):
     name: str
     value: Optional[Union[int, float]] = None
     me: Optional[float] = None
@@ -137,7 +151,7 @@ class RuleConsumerType(str, Enum):
     TOP_K = "topK"
 
 
-class RuleConsumer(BaseModel):
+class RuleConsumer(DataItemModel):
     name: RuleConsumerType
     file: Optional[str] = None
     format: Optional[str] = None
@@ -326,3 +340,9 @@ class HeadVariablePreMappingType(str, Enum):
 class HeadVariablePreMapping(BaseModel):
     type: HeadVariablePreMappingType
     target: Optional[str] = None
+    
+class Constraint(BaseModel):
+    
+    name: str
+    
+    pass    
