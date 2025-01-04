@@ -12,6 +12,8 @@ from pyrdfrules.rdfrules.pipeline import Pipeline
 
 class TaskHttpApi(TaskApi):
     
+    __doc__ = TaskApi.__doc__
+    
     context: HTTPRDFRulesApiContext
     
     def __init__(self, context: HTTPRDFRulesApiContext) -> None:

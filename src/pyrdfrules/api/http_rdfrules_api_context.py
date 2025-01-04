@@ -7,6 +7,9 @@ from pyrdfrules.common.http.http_client import HttpClient
 from pyrdfrules.config import Config
 
 class HTTPRDFRulesApiContext(RDFRulesApiContext):
+    """
+    Context class for the RDFRules API, passed around for HTTP API clients.
+    """
     
     url: Url
     """URL of the RDFRules API server.

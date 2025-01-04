@@ -2,7 +2,7 @@ from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
 
 
 class WorkspaceApi():
-    
+        
     context: RDFRulesApiContext
     
     def __init__(self, context: RDFRulesApiContext) -> None:

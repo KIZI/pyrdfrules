@@ -6,6 +6,8 @@ from pyrdfrules.api.workspace.workspace_api import WorkspaceApi
 
 class WorkspaceHttpApi(WorkspaceApi):
     
+    __doc__ = WorkspaceApi.__doc__
+    
     context: HTTPRDFRulesApiContext
     
     def __init__(self, context: HTTPRDFRulesApiContext) -> None:
