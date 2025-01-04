@@ -69,7 +69,7 @@ pip install pyrdfrules
 
 ### Usage
 
-Full documentation is available at [a dedicated documentation site](#documentation). Code samples can be found in the sample directory, including a Python notebook.
+Full documentation is available at [a dedicated documentation site](https://kizi.github.io/pyrdfrules/pyrdfrules.html). Code samples can be found in the sample directory, including a Python notebook.
 
 Currently, using a remote HTTP instance of RDFRules or a local instance of RDFRules is supported. Automatic installation of JVM if not present and of RDFRules is supported, and the library takes care of running the RDFRules application.
 
