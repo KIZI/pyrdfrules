@@ -1,4 +1,5 @@
 from typing import List
+import pandas
 from pydantic import BaseModel
 
 from pyrdfrules.common.rule.resultrule import ResultRule
@@ -34,13 +35,21 @@ class Ruleset(BaseModel):
     __iterator_index: int = 0
     
     def get_rules(self) -> List[ResultRule]:
+        """Returns the list of rules.
+        
+        Returns:
+            List[ResultRule]: List of rules.
+        """
+        
         return self.rules
     
-    def as_json(self) -> str:
-        return ''
-    
     def as_text(self) -> str:
-        return ''
+        """Serialize the ruleset into a text representation.
+
+        Returns:
+            str: Text representation of the ruleset.
+        """
+        return "\n".join([rule.as_text() for rule in self.rules])
     
     # region iterator
     def __iter__(self):
@@ -58,4 +67,3 @@ class Ruleset(BaseModel):
     # endregion
     
     # todo - sort by functions, serialisation, deserialisation, export to some well-known formats for further analysis
-    # todo - generator for rules

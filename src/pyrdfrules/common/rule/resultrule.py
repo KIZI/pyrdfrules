@@ -25,8 +25,16 @@ class ResultRule(BaseModel):
     """
     measures: List[RuleMeasure]
     
-    def as_test(self) -> str:
-        return ''
+    def as_text(self) -> str:
+        
+        body_segments = []
+        
+        for body in self.body:
+            body_segments.append(body.as_text())
+            
+        body_text = ' ^ '.join(body_segments)
+        
+        return body_text + ' -> ' + self.head.as_text()
     
     def as_json(self) -> str:
-        return ''
+        return self.json()

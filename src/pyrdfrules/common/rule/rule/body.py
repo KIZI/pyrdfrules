@@ -13,3 +13,6 @@ class RuleBody(BaseModel):
     predicate: Predicate
     
     subject: Subject
+    
+    def as_text(self) -> str:
+        return "(" + self.subject.value + ' <' + self.predicate.localName + '> ' + self.object.value + ")"
