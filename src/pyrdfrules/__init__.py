@@ -91,5 +91,9 @@ for step in rdfrules.task.run_task(task):
 
 # Access the result of the task.
 print(task.result)
+
+# Access the rules from the result.
+for rule in task.result.get_ruleset().get_rules():
+    print(rule.as_text()) # Print the rule in text format.
 ```        
 """
