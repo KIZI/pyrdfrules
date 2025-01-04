@@ -9,6 +9,9 @@ from pyrdfrules.engine.remote_http_engine import RemoteHttpEngine
 from pyrdfrules.rdfrules.rdfrules import RDFRules
 
 class Application(BaseModel):
+    """
+    The Application class provides methods to start and stop local or remote instances of RDFRules.
+    """
     
     __rdfrules: RDFRules|None = None
         

@@ -6,7 +6,7 @@ from pyrdfrules.common.logging.logger import log
 
 class Workspace():
     """
-    Path in which RDFRules can find datasets and store results.
+    The Workspace class provides methods to interact with the RDFRules workspace, including file management.
     """
     
     api: WorkspaceApi

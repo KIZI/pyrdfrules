@@ -2,9 +2,16 @@ import logging
 
 from pyrdfrules.config import Config
 
-pyrdfrules_logger = None
+pyrdfrules_logger : logging.Logger = None
+"""Global instance of the logger.
+Empty by default.
+Obtain the logger by calling the `log` function from this package.
+"""
 
 class Logger():
+    """
+    The Logger class provides methods to configure and retrieve the logger for the application.
+    """
     
     logger: logging.Logger = None
     

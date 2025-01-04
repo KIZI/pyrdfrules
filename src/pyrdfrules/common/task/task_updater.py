@@ -5,7 +5,8 @@ from pyrdfrules.common.task.task import Task
 from pyrdfrules.config import Config
 
 class TaskUpdater():
-    """Utility class that handles the updating of tasks.
+    """
+    The TaskUpdater class handles the updating of tasks.
     """
     
     api: TaskApi

@@ -1,0 +1,3 @@
+"""
+Common exceptions for pyRDFRules.
+"""

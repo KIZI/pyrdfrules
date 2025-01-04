@@ -9,6 +9,8 @@ from pyrdfrules.rdfrules.jsonformats import PrefixFull
 
 
 class Pipeline(BaseModel):
+    """Pipeline is a sequence of tasks to be executed.
+    """
     tasks: List[RDFRulesTaskModel]
     
     @model_serializer()

@@ -6,6 +6,9 @@ from pyrdfrules.common.file.workspace_directory import WorkspaceDirectory
 from pyrdfrules.common.file.workspace_file import WorkspaceFile
 
 class WorkspaceTree(BaseModel):
+    """
+    The WorkspaceTree class represents the structure of the workspace directory, including files and subdirectories.
+    """
         
     root: WorkspaceDirectory|None = None
     

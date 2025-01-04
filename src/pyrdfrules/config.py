@@ -3,7 +3,8 @@ from pydantic import BaseModel, PositiveInt
 
 
 class Config(BaseModel):
-    """Configuration class for the instance.
+    """
+    Configuration class for the instance.
     """
     
     task_update_interval_ms: PositiveInt = 1000

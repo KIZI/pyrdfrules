@@ -8,6 +8,9 @@ from pyrdfrules.rdfrules.pipeline import Pipeline
 
 
 class TaskRunner():
+    """
+    The TaskRunner class is responsible for running tasks on the RDFRules engine.
+    """
     
     api: TaskApi
     

@@ -7,14 +7,24 @@ from pyrdfrules.config import Config
 from pyrdfrules.engine.engine import Engine
 
 class RDFRules():
+    """Represents the RDFRules engine.
+    """
     
     engine: Engine
+    """RDFRules engine.
+    """
     
     workspace: Workspace
+    """Workspace classes.
+    """
     
     task: TaskRunner
+    """Task runner.
+    """
     
     config: Config
+    """Configuration.
+    """
     
     def __init__(self, engine: Engine, config: Config) -> None:
         self.engine = engine

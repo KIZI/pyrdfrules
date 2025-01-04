@@ -1,7 +1,6 @@
 from typing import List
 from pydantic import BaseModel
 
-from pyrdfrules.common.graph.graph import Graph
 from pyrdfrules.common.rule.measure.measure import RuleMeasure
 from pyrdfrules.common.rule.rule.body import RuleBody
 from pyrdfrules.common.rule.rule.head import RuleHead
@@ -25,3 +24,9 @@ class ResultRule(BaseModel):
     Measures of the rule.
     """
     measures: List[RuleMeasure]
+    
+    def as_test(self) -> str:
+        return ''
+    
+    def as_json(self) -> str:
+        return ''
