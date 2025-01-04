@@ -34,8 +34,7 @@ class Ruleset(BaseModel):
     __iterator_index: int = 0
     
     def get_rules(self) -> List[ResultRule]:
-        # return all rules
-        pass
+        return self.rules
     
     def as_json(self) -> str:
         return ''

@@ -1,7 +1,5 @@
 
 from pyrdfrules.common.rule.resultrule import ResultRule
-from pyrdfrules.common.rule.rule.body import RuleBody
-from pyrdfrules.common.rule.rule.head import RuleHead
 from pyrdfrules.common.rule.ruleset import Ruleset
 
 
@@ -27,14 +25,14 @@ class Result():
             match item:
                 case {'body': _, 'head': __, 'measures': ___}:
                     # Item is a rule
-                    
-                    rule = ResultRule.model_construct(item)
-                    
-                    print(rule)
-                    
+                    rule = ResultRule.model_validate(item)
+                    rules.append(rule)               
                     pass
                 case _: 
+                    print("Unknown item")
                     pass
+                
+        self.ruleset = Ruleset(rules = rules)
     
     def get_ruleset(self) -> Ruleset:
-        pass
+        return self.ruleset

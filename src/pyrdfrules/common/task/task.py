@@ -1,6 +1,7 @@
 import datetime
 
 from pyrdfrules.common.event.event_dispatcher import EventDispatcher
+from pyrdfrules.common.result.result import Result
 from pyrdfrules.common.task.event.task_finished_message import TaskFinishedMessage
 from pyrdfrules.common.task.event.task_log_message import TaskLogMessage
 
@@ -81,6 +82,18 @@ class Task():
             self.result = data['result']
         
         self.last_updated = datetime.datetime.now()
+        
+    def get_result(self) -> Result:
+        """Returns formatted result of the task.
+
+        Returns:
+            Result: Result of the task.
+        """
+        
+        if not self.is_finished():
+            raise Exception("Task is not finished yet.")
+        
+        return Result(self.result)
         
     def _stop(self) -> None:
         """Stops the task.

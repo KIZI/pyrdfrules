@@ -21,7 +21,12 @@ class TestRuleParsing(unittest.TestCase):
         
         result = Result(rules)
         
-        print(rules)
+        for rule in result.get_ruleset().get_rules():
+            self.assertEqual(rule.head.predicate, "<created>")
+            self.assertEqual(rule.head.subject.value, "?a")
+            self.assertEqual(rule.head.object.value, "?b")
+            self.assertEqual(rule.head.graphs, ["<yago>"])
+            self.assertEqual(rule.body[0].subject.value, "?c")
 
 
 if __name__ == '__main__':

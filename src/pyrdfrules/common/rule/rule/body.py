@@ -1,9 +1,15 @@
 from typing import List
 from pydantic import BaseModel
 
+from pyrdfrules.common.rule.rule.object import Object
+from pyrdfrules.common.rule.rule.predicate import Predicate
+from pyrdfrules.common.rule.rule.subject import Subject
+
 class RuleBody(BaseModel):
-    graphs: str
+    graphs: List[str]
     
-    object: str
+    object: Object
     
-    items: List[dict]
+    predicate: Predicate
+    
+    subject: Subject

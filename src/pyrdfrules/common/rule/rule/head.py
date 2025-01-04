@@ -11,6 +11,6 @@ class RuleHead(BaseModel):
     
     object: Object
     
-    predicate: Predicate
+    predicate: str
     
     subject: Subject
