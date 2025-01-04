@@ -7,8 +7,8 @@ class RulePart(BaseModel):
         
     graphs: List[Graph]
     
-    subject: any
+    subject: dict
     
-    predicate: any
+    predicate: dict
     
-    object: any
+    object: dict

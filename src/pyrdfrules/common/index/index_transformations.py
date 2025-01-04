@@ -1,6 +1,5 @@
 from pyrdfrules.common.base_transformations import BaseTransformations
 from pyrdfrules.common.rule.ruleset import Ruleset
-from pyrdfrules.index import Index
 
 class IndexTransformations(BaseTransformations):
     
