@@ -1,0 +1,117 @@
+[
+{
+    "name": "LoadGraph",
+    "parameters": {
+    "path": "/data/wn18rr/train.tsv",
+    "settings": "tsvParsedUris"
+    }
+},
+{
+    "name": "Index",
+    "parameters": {
+    "train": [],
+    "test": []
+    }
+},
+{
+    "name": "Mine",
+    "parameters": {
+    "thresholds": [
+        {
+        "name": "MinHeadSize",
+        "value": 1
+        },
+        {
+        "name": "MinSupport",
+        "value": 5
+        },
+        {
+        "name": "MaxRuleLength",
+        "value": 3
+        }
+    ],
+    "ruleConsumers": [
+        {
+        "name": "topK",
+        "k": 10000,
+        "allowOverflow": true
+        }
+    ],
+    "patterns": [],
+    "constraints": [
+        {
+        "name": "OnlyLowerCardinalitySideConstants"
+        }
+    ],
+    "parallelism": 0
+    }
+},
+{
+    "name": "ComputeConfidence",
+    "parameters": {
+    "name": "QpcaConfidence",
+    "min": 0.2
+    }
+},
+{
+    "name": "SortRuleset",
+    "parameters": {
+    "by": []
+    }
+},
+{
+    "name": "Prune",
+    "parameters": {
+    "strategy": "DataCoveragePruning",
+    "onlyFunctionalProperties": false,
+    "onlyExistingTriples": true,
+    "injectiveMapping": true
+    }
+},
+{
+    "name": "Predict",
+    "parameters": {
+    "rules": [],
+    "chooseTestSet": true,
+    "testPath": "/data/wn18rr/test.tsv",
+    "predictedResults": [],
+    "headVariablePreMapping": {
+        "type": "noMapping"
+    },
+    "injectiveMapping": true,
+    "mergeTestAndTrainForPrediction": true,
+    "onlyTestCoveredPredictions": false
+    }
+},
+{
+    "name": "GroupPredictions",
+    "parameters": {
+    "useScorer": true,
+    "scorer": {
+        "type": "maximum",
+        "confidence": "default"
+    },
+    "useConsumer": false,
+    "confidence": "default"
+    }
+},
+{
+    "name": "ToPredictionTasks",
+    "parameters": {
+    "confidence": "default",
+    "generator": {
+        "type": "testCardinalities"
+    }
+    }
+},
+{
+    "name": "WithModes",
+    "parameters": {}
+},
+{
+    "name": "Evaluate",
+    "parameters": {
+    "ranking": "test"
+    }
+}
+]
