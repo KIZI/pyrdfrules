@@ -15,7 +15,7 @@ PyRDFRules
     RDFRules
   </a>
   •
-  <a href="">
+  <a href="https://kizi.github.io/pyrdfrules/pyrdfrules.html">
     Documentation
   </a>
   •
