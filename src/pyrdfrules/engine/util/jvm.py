@@ -4,14 +4,11 @@ from time import sleep
 import jdk
 from multiprocessing import Process, Pipe
 
-import jpype
 import jpype.imports
 from jpype.types import *
 import os
-import sys
-from io import StringIO
-
 import requests
+import platform
 
 from pyrdfrules.common.logging.logger import log
 from pyrdfrules.engine.exception.failed_to_start_exception import FailedToStartException
@@ -73,8 +70,9 @@ def is_rdfrules_installed() -> bool:
 def set_jvm_env() -> None:
     java_home = "%s/%s" % (jdk._JRE_DIR, os.listdir(jdk._JRE_DIR)[0])
     
-    # todo - why is this necessary? probably not gonna be needed on Linux and Windows...
-    java_home += "/Contents/Home"
+    if platform.system() == "Darwin":
+        # todo - why is this necessary? probably not gonna be needed on Linux and Windows...
+        java_home += "/Contents/Home"
     
     os.environ["JAVA_HOME"] = java_home
     os.environ["PATH"] = "%s/bin:%s" % (java_home, os.environ["PATH"])
