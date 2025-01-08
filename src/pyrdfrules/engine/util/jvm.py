@@ -63,7 +63,7 @@ def is_jvm_installed() -> bool:
 
 def install_jvm():
     if not is_jvm_installed():
-        jdk.install(JVM_VERSION, jre=True, operating_system=jdk.OS, arch=jdk.ARCH)
+        jdk.install(JVM_VERSION, jre=True, operating_system=jdk.OS, arch=jdk.ARCH, path=get_jvm_path())
     
 def is_rdfrules_installed() -> bool:
     path = get_rdfrules_path()

@@ -91,8 +91,24 @@ rdfrules = await app.start_remote(
 
 #### Local instance
 
+To set up a local instance of PyRDFRules
+
 ```python
-todo
+# Recommended: Configure your workspace directory.
+
+config = Config(
+    workspace_path=os.path.realpath("YOUR_WORKSPACE_DIRECTORY")
+)
+
+app = pyrdfrules.application.Application()
+        
+app.start_local(
+    install_jvm = True, # If you wish for Python to install JVM for you, set to true.
+    install_rdfrules = True, # If you wish for Python to install RDFRules, set to true.
+    rdfrules_path = "...", # Installation path for RDFRules. If you set install_rdfrules to False, it will expect RDFRule to be installed in this location.
+    jvm_path = "", # Installation path for the JVM. If you set install_jvm to False, it will expect JVM to be located in that directory.
+    config = config
+)
 ```
 
 As a last step, launch the pipeline, wait for all results and print the head, body and measures of each mined rule.
