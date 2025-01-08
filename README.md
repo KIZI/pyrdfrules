@@ -126,14 +126,36 @@ task : Task = None
 
 with open("./task.json", "r") as file:        
     task_json_from_file = file.read()
-    task = await rdfrules.task.create_task_from_string(task_json_from_file)
-    
-await rdfrules.task.run_task(task)
+    task = rdfrules.task.create_task_from_string(task_json_from_file)
 ```
 
-This will block execution until the task is finished. You can then access the results of the task once it's done.
+You can also specify the pipeline in code.
 
-Full pipeline sample matching the DBpedia & YAGO example from the RDFRules web instance can be found in `sample/dbpedia.py` or DOCUMENTATION LINK (todo).
+```python
+
+pipeline = Pipeline(
+    tasks=[
+        LoadGraph(
+            graphName = "<dbpedia>",
+            path = "/dbpedia_yago/mappingbased_objects_sample.ttl"
+        ),
+        ... # your other tasks go here
+        GetRules()
+    ]
+)
+
+task = self.rdfrules.task.create_task(pipeline)
+    
+for step in self.rdfrules.task.run_task(task):
+      print(step)
+  
+print(task.result) # access task result dictionary - pure output from RDFRules
+print(task.get_result()) # returns formatted outputs
+```
+
+Task execution is non blocking and you can stop it, as long as it is not finished in RDFRules.
+
+Full pipeline sample matching the DBpedia & YAGO example from the RDFRules web instance can be found in documentation [doc](https://kizi.github.io/pyrdfrules/pyrdfrules.html), or in `src/tests/test_pipeline.py`.
 
 ## Developing
 
