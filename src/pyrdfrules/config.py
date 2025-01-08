@@ -28,4 +28,7 @@ class Config(BaseModel):
     
     workspace_path: Path|None = None
     """Path to the workspace directory.
+    Applicable only to local instances of RDFRules.
+    
+    If empty, will default to the install directory of RDFRules/workspace.
     """
