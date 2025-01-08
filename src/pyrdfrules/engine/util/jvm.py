@@ -1,3 +1,4 @@
+from pathlib import Path
 import subprocess
 from threading import Thread
 from time import sleep
@@ -21,10 +22,18 @@ server_url = None
 _jvm_path = None
 _rdfrules_path = None
 
+_workspace_path = None
+
 def get_base_dir():
     return os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "..", ".."))
 
-def setup(rdf_rules_path: str = '', jvm_path: str = '') -> None:
+def get_workspace_dir():
+    global _workspace_path
+    return _workspace_path
+
+def setup(rdf_rules_path: str = '', jvm_path: str = '', workspace_path: str|Path|None = '') -> None:
+    if not workspace_path:
+        workspace_path = os.path.join(get_base_dir(), "workspace")
     
     if not rdf_rules_path:
         rdf_rules_path = os.path.join(get_base_dir(), "rdfrules")
@@ -38,6 +47,9 @@ def setup(rdf_rules_path: str = '', jvm_path: str = '') -> None:
     global _jvm_path
     _jvm_path = jvm_path
     
+    global _workspace_path
+    _workspace_path = str(workspace_path)
+    
     pass
 
 def get_jvm_path() -> str:
@@ -45,7 +57,6 @@ def get_jvm_path() -> str:
 
 def get_rdfrules_path() -> str:
     return _rdfrules_path
-
 
 def is_jvm_installed() -> bool:
     return os.path.isdir(jdk._JRE_DIR)
@@ -55,7 +66,6 @@ def install_jvm():
         jdk.install(JVM_VERSION, jre=True, operating_system=jdk.OS, arch=jdk.ARCH)
     
 def is_rdfrules_installed() -> bool:
-    
     path = get_rdfrules_path()
     
     # check if the directory exists
@@ -77,7 +87,7 @@ def set_jvm_env() -> None:
     os.environ["JAVA_HOME"] = java_home
     os.environ["PATH"] = "%s/bin:%s" % (java_home, os.environ["PATH"])
     os.environ["RDFRULES_STOPPING_TOKEN"] = "stoppingtoken"
-    os.environ["RDFRULES_WORKSPACE"] = os.path.join(get_rdfrules_path(), "workspace")
+    os.environ["RDFRULES_WORKSPACE"] = get_workspace_dir()
     
     log().debug(f"JAVA_HOME: {os.environ['JAVA_HOME']}")
     log().debug(f"PATH: {os.environ['PATH']}")
@@ -127,9 +137,10 @@ def read_output_stderr(pipe, process):
     
 def start_rdfrules(pipe):
     path = os.path.abspath('../src/rdfrules')
-    workspace = os.environ['RDFRULES_WORKSPACE']
+    workspace = get_workspace_dir()
 
     log().info(f"Starting RDFRules at {path}")
+    log().info(f"Workspace at {workspace}")
     
     command = [
         "java",

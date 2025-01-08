@@ -17,8 +17,8 @@ def get_path(file_name):
 
 # slightly modified from
 # from https://stackoverflow.com/questions/16694907/download-large-file-in-python-with-requests
-def download_file(url, file_name):
-    file_path = os.path.join(os.path.dirname((os.path.realpath(__file__))), "..", "rdfrules", "workspace", "dbpedia_yago", file_name)
+def download_file(url, file_name, base_path):
+    file_path = os.path.join(base_path, "dbpedia_yago", file_name)
     print(file_path)
     # check if the file already exists
     if os.path.exists(file_path):
@@ -37,18 +37,21 @@ def download_file(url, file_name):
 class TestLocalPipeline(unittest.TestCase):
     
     def setUp(self):
-        
         # download the pipeline files
+        self.config = Config(
+            workspace_path=os.path.realpath(os.path.join(os.path.dirname((os.path.realpath(__file__))), "..", "rdfrules", "workspace"))
+        )
         
-        download_file("http://rdfrules.vse.cz/api/workspace/dbpedia_yago/mappingbased_objects_sample.ttl", "mappingbased_objects_sample.ttl")
-        download_file("http://rdfrules.vse.cz/api/workspace/dbpedia_yago/yagoFacts.tsv", "yagoFacts.tsv")
-        download_file("http://rdfrules.vse.cz/api/workspace/dbpedia_yago/yagoDBpediaInstances.tsv", "yagoDBpediaInstances.tsv")
+        download_file("http://rdfrules.vse.cz/api/workspace/dbpedia_yago/mappingbased_objects_sample.ttl", "mappingbased_objects_sample.ttl", self.config.workspace_path)
+        download_file("http://rdfrules.vse.cz/api/workspace/dbpedia_yago/yagoFacts.tsv", "yagoFacts.tsv", self.config.workspace_path)
+        download_file("http://rdfrules.vse.cz/api/workspace/dbpedia_yago/yagoDBpediaInstances.tsv", "yagoDBpediaInstances.tsv", self.config.workspace_path)
 
         self.instance = app = pyrdfrules.application.Application()
         
         self.rdfrules = app.start_local(
             install_jvm = True,
-            install_rdfrules = True
+            install_rdfrules = True,
+            config = self.config
         )
 
         return super().setUp()

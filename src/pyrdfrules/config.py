@@ -1,4 +1,5 @@
 import logging
+from pathlib import Path
 from pydantic import BaseModel, PositiveInt
 
 
@@ -21,6 +22,10 @@ class Config(BaseModel):
     """Logs output to the console.
     """
     
-    log_level: int = logging.DEBUG
+    log_level: int = logging.INFO
     """Logging level.
+    """
+    
+    workspace_path: Path|None = None
+    """Path to the workspace directory.
     """

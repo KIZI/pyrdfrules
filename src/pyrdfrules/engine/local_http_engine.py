@@ -57,7 +57,7 @@ class LocalHttpEngine(HttpEngine):
         self.rdfrules_path = rdfrules_path
         self.jvm_path = jvm_path
         
-        setup(rdfrules_path, jvm_path)
+        setup(rdfrules_path, jvm_path, workspace_path=config.workspace_path)
     
     def install(self) -> None:
         """Installs RDFRules locally.
