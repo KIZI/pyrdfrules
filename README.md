@@ -106,7 +106,7 @@ app.start_local(
     install_jvm = True, # If you wish for Python to install JVM for you, set to true.
     install_rdfrules = True, # If you wish for Python to install RDFRules, set to true.
     rdfrules_path = "...", # Installation path for RDFRules. If you set install_rdfrules to False, it will expect RDFRule to be installed in this location.
-    jvm_path = "", # Installation path for the JVM. If you set install_jvm to False, it will expect JVM to be located in that directory.
+    jvm_path = "", # Installation path for the JVM.
     config = config
 )
 ```
