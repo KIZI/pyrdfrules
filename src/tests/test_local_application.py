@@ -6,8 +6,8 @@ from pyrdfrules.application import Application
 from pyrdfrules.config import Config
 
 class TestLocalApplication(unittest.TestCase):
-
-    def skip_test_runs_local(self):
+    
+    def test_runs_local(self):
         """
         Check if the application runs locally, does not crash and terminates correctly.
         """
@@ -21,7 +21,7 @@ class TestLocalApplication(unittest.TestCase):
         time.sleep(10)
         app.stop()
         
-    def skip_test_runs_workspace(self):
+    def test_runs_workspace(self):
         """
         Check if the application runs with a workspace, does not crash and terminates correctly.
         """
@@ -34,7 +34,7 @@ class TestLocalApplication(unittest.TestCase):
         )
         
         self.assertIsNotNone(rdfrules, "Should not be None")
-        rdfrules.engine.check() # todo - make this work
+        rdfrules.engine.check()
         
         app.stop()
 

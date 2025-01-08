@@ -21,6 +21,6 @@ class Config(BaseModel):
     """Logs output to the console.
     """
     
-    log_level: int = logging.INFO
+    log_level: int = logging.DEBUG
     """Logging level.
     """

@@ -22,7 +22,7 @@ _jvm_path = None
 _rdfrules_path = None
 
 def get_base_dir():
-    return os.path.abspath('../src')
+    return os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "..", ".."))
 
 def setup(rdf_rules_path: str = '', jvm_path: str = '') -> None:
     
@@ -77,6 +77,12 @@ def set_jvm_env() -> None:
     os.environ["JAVA_HOME"] = java_home
     os.environ["PATH"] = "%s/bin:%s" % (java_home, os.environ["PATH"])
     os.environ["RDFRULES_STOPPING_TOKEN"] = "stoppingtoken"
+    os.environ["RDFRULES_WORKSPACE"] = os.path.join(get_rdfrules_path(), "workspace")
+    
+    log().debug(f"JAVA_HOME: {os.environ['JAVA_HOME']}")
+    log().debug(f"PATH: {os.environ['PATH']}")
+    log().debug(f"RDFRULES_STOPPING_TOKEN: {os.environ['RDFRULES_STOPPING_TOKEN']}")
+    log().info(f"RDFRULES_WORKSPACE: {os.environ['RDFRULES_WORKSPACE']}")
 
 def install_rdfrules() -> bool:
     # download compiled version
@@ -121,7 +127,8 @@ def read_output_stderr(pipe, process):
     
 def start_rdfrules(pipe):
     path = os.path.abspath('../src/rdfrules')
-    
+    workspace = os.environ['RDFRULES_WORKSPACE']
+
     log().info(f"Starting RDFRules at {path}")
     
     command = [
@@ -129,7 +136,7 @@ def start_rdfrules(pipe):
         "-Dprog.version=1.7.2",
         "-Dprog.revision=3ea05ae9ef9d9258c005a1971721225663d57f98",
         f"-Dprog.home={path}",
-        "-Drdfrules.writable.path=.",
+        f"-Drdfrules.writable.path={workspace}",
         "-cp", f"{path}/lib/*",
         "com.github.propi.rdfrules.http.Main"
     ]
@@ -189,13 +196,12 @@ def start_rdfrules_process():
         log().critical("RDFRules process did not start")
         raise FailedToStartException("RDFRules process did not start")
     
-    
     log().debug("Started RDFRules process")
     
     return proc
 
 def get_server_url():
-    return server_url
+    return server_url + "/api/"
 
 def stop_rdfrules_process():
     log().info("Stopping RDFRules process")

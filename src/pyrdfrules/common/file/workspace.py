@@ -29,7 +29,7 @@ class Workspace():
         
         return tree
     
-    def upload_file(self, path: Path | str, data : bytes = None) -> None:
+    def upload_file(self, path: Path | str, file) -> None:
         """Uploads a file to the workspace.
 
         Args:
@@ -38,7 +38,7 @@ class Workspace():
         
         log().debug(f"Uploading file {path}")
         
-        self.api.upload_file(str(path), data)
+        self.api.upload_file(str(path), file)
         
     def download_file(self, path: Path | str) -> str:
         """Downloads a file from the workspace.

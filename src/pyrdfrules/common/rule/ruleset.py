@@ -1,5 +1,4 @@
 from typing import List
-import pandas
 from pydantic import BaseModel
 
 from pyrdfrules.common.rule.resultrule import ResultRule

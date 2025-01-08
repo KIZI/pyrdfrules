@@ -24,7 +24,7 @@ class WorkspaceApi():
         """
         pass
     
-    def upload_file(self, path: str, content: bytes):
+    def upload_file(self, path: str, file):
         """Upload a file.
         """
         pass
