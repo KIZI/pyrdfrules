@@ -1,11 +1,9 @@
 from typing import List
 from pydantic import BaseModel
 
-from pyrdfrules.common.graph.graph import Graph
-
 class RulePart(BaseModel):
         
-    graphs: List[Graph]
+    graphs: List[dict]
     
     subject: dict
     

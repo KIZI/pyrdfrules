@@ -38,6 +38,7 @@ PyRDFRules
     - [Local instance](#local-instance)
     - [Run a task](#run-a-task)
 - [Developing](#developing)
+- [Releasing a new version](#releasing-a-new-version)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
@@ -170,6 +171,14 @@ To run a build and run jupyter lab:
 ```console
 ./run.sh
 ```
+
+## Releasing a new version
+
+* Up the version in `src/__about__.py`.
+* Run hatch build
+* Run hatch publish
+
+Alternatively, after upping the version, run `./build.sh`.
 
 ## Roadmap
 
