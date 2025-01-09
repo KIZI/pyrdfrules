@@ -136,7 +136,7 @@ def read_output_stderr(pipe, process):
         pass
     
 def start_rdfrules(pipe):
-    path = os.path.abspath('../src/rdfrules')
+    path = get_rdfrules_path()
     workspace = get_workspace_dir()
 
     log().info(f"Starting RDFRules at {path}")
@@ -212,6 +212,9 @@ def start_rdfrules_process():
     return proc
 
 def get_server_url():
+    if server_url.endswith("/"):
+        return server_url + "api/"
+    
     return server_url + "/api/"
 
 def stop_rdfrules_process():
