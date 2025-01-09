@@ -19,6 +19,9 @@ def get_path(file_name):
 # from https://stackoverflow.com/questions/16694907/download-large-file-in-python-with-requests
 def download_file(url, file_name, base_path):
     file_path = os.path.join(base_path, "dbpedia_yago", file_name)
+    
+    os.makedirs(os.path.join(base_path, "dbpedia_yago"), exist_ok=True)
+    
     print(file_path)
     # check if the file already exists
     if os.path.exists(file_path):

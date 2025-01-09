@@ -51,6 +51,15 @@ def setup(rdf_rules_path: str = '', jvm_path: str = '', workspace_path: str|Path
     global _workspace_path
     _workspace_path = str(workspace_path)
     
+    if not os.path.exists(_workspace_path):
+        os.makedirs(_workspace_path, exist_ok=True)
+        
+    if not os.path.exists(_rdfrules_path):
+        os.makedirs(_rdfrules_path, exist_ok=True)
+    
+    if _jvm_path and not os.path.exists(_jvm_path):
+        os.makedirs(_jvm_path, exist_ok=True)
+    
     pass
 
 def get_jvm_path() -> str:
