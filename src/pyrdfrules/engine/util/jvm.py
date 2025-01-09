@@ -51,9 +51,6 @@ def setup(rdf_rules_path: str = '', jvm_path: str = '', workspace_path: str|Path
     pass
 
 def get_jvm_path() -> str:
-    print(_jvm_path)
-    print(jdk._JRE_DIR)
-    
     if not _jvm_path:
         return jdk._JRE_DIR
 
@@ -77,7 +74,7 @@ def get_rdfrules_path() -> str:
     return _rdfrules_path
 
 def is_jvm_installed() -> bool:
-    return os.path.isdir(jdk._JRE_DIR)
+    return os.path.isdir(get_jvm_path()) and len(os.listdir(get_jvm_path())) > 0
 
 def install_jvm():
     if not is_jvm_installed():
