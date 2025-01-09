@@ -16,6 +16,9 @@ from pyrdfrules.common.logging.logger import log
 from pyrdfrules.engine.exception.failed_to_start_exception import FailedToStartException
 from pyrdfrules.rdfrules.release import JVM_VERSION, RDFRULES_DOWNLOAD_URI
 
+from tqdm import tqdm
+import zipfile
+
 started = False
 result_process = None
 server_url = None
@@ -57,7 +60,6 @@ def get_jvm_path() -> str:
     return _jvm_path
 
 def get_jvm_home() -> str:
-    
     parts = [
         get_jvm_path(),
         os.listdir(get_jvm_path())[0]
@@ -78,6 +80,9 @@ def is_jvm_installed() -> bool:
 
 def install_jvm():
     if not is_jvm_installed():
+        log().info(f"JVM not installed, installing at {get_jvm_path()}")
+        log().info(f"JVM version: {JVM_VERSION}")
+        log().info(f"This may take a while...")
         jdk.install(JVM_VERSION, jre=True, operating_system=jdk.OS, arch=jdk.ARCH, path=get_jvm_path())
     
 def is_rdfrules_installed() -> bool:
@@ -114,15 +119,30 @@ def install_rdfrules() -> bool:
     
     target = os.path.join(path, 'rdfrules.zip')
     
-    url = RDFRULES_DOWNLOAD_URI
-    r = requests.get(url, allow_redirects=True)
-    open(target, 'wb').write(r.content)
+    with tqdm(unit='B', unit_scale=True, unit_divisor=1024, miniters=1, desc="Downloading RDFRules") as t:
+        def update_to(size, totalSize):
+            t.total = totalSize
+            t.update(size)
+        
+        url = RDFRULES_DOWNLOAD_URI
+        r = requests.get(url, allow_redirects=True, stream=True)
+        
+        with open(target, 'wb') as f:            
+            for data in r.iter_content(chunk_size=8192):
+                size = f.write(data)
+                update_to(size, int(r.headers.get('content-length')))
     
     # unzip
     
-    import zipfile
-    with zipfile.ZipFile(target, 'r') as zip_ref:
-        zip_ref.extractall(path)
+    with tqdm(unit='B', unit_scale=True, unit_divisor=1024, miniters=1, desc="Extracting RDFRules") as t:
+        with open(target, 'rb') as f:
+            with zipfile.ZipFile(f, 'r') as zip_ref:
+                
+                t.total = sum([zinfo.file_size for zinfo in zip_ref.filelist])
+                
+                for file in zip_ref.namelist():
+                    zip_ref.extract(file, path)
+                    t.update(zip_ref.getinfo(file).file_size)
     
     pass
 
@@ -162,8 +182,6 @@ def start_rdfrules(pipe):
         "-cp", os.path.join(path, "lib", "*"),
         "com.github.propi.rdfrules.http.Main"
     ]
-    
-    print(command)
 
     process = subprocess.Popen(
         command, 
