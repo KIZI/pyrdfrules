@@ -1,3 +1,4 @@
+
 from pathlib import Path
 import subprocess
 from threading import Thread
@@ -37,9 +38,6 @@ def setup(rdf_rules_path: str = '', jvm_path: str = '', workspace_path: str|Path
     
     if not rdf_rules_path:
         rdf_rules_path = os.path.join(get_base_dir(), "rdfrules")
-        
-    if not jvm_path:
-        jvm_path = os.path.join(get_base_dir(), "jvm")
     
     global _rdfrules_path
     _rdfrules_path = rdf_rules_path
@@ -53,7 +51,27 @@ def setup(rdf_rules_path: str = '', jvm_path: str = '', workspace_path: str|Path
     pass
 
 def get_jvm_path() -> str:
+    print(_jvm_path)
+    print(jdk._JRE_DIR)
+    
+    if not _jvm_path:
+        return jdk._JRE_DIR
+
     return _jvm_path
+
+def get_jvm_home() -> str:
+    
+    parts = [
+        get_jvm_path(),
+        os.listdir(get_jvm_path())[0]
+    ]
+        
+    if platform.system() == "Darwin":
+        # todo - why is this necessary? probably not gonna be needed on Linux and Windows...
+        parts.append("Contents")
+        parts.append("Home")
+    
+    return os.path.join(*parts)
 
 def get_rdfrules_path() -> str:
     return _rdfrules_path
@@ -78,14 +96,10 @@ def is_rdfrules_installed() -> bool:
     return all([os.path.exists(os.path.join(path, shape)) for shape in shapes])
 
 def set_jvm_env() -> None:
-    java_home = "%s/%s" % (jdk._JRE_DIR, os.listdir(jdk._JRE_DIR)[0])
-    
-    if platform.system() == "Darwin":
-        # todo - why is this necessary? probably not gonna be needed on Linux and Windows...
-        java_home += "/Contents/Home"
+    java_home = get_jvm_home()
     
     os.environ["JAVA_HOME"] = java_home
-    os.environ["PATH"] = "%s/bin:%s" % (java_home, os.environ["PATH"])
+    os.environ["PATH"] = os.path.join(java_home, "bin") + ":%s" % (os.environ["PATH"])
     os.environ["RDFRULES_STOPPING_TOKEN"] = "stoppingtoken"
     os.environ["RDFRULES_WORKSPACE"] = get_workspace_dir()
     
@@ -95,7 +109,7 @@ def set_jvm_env() -> None:
     log().info(f"RDFRULES_WORKSPACE: {os.environ['RDFRULES_WORKSPACE']}")
 
 def install_rdfrules() -> bool:
-    # download compiled version
+    # download compiled version
     path = get_rdfrules_path()
         
     if not os.path.exists(path):
@@ -143,21 +157,23 @@ def start_rdfrules(pipe):
     log().info(f"Workspace at {workspace}")
     
     command = [
-        "java",
+        os.path.join(get_jvm_home(), "bin", "java"),
         "-Dprog.version=1.7.2",
         "-Dprog.revision=3ea05ae9ef9d9258c005a1971721225663d57f98",
         f"-Dprog.home={path}",
         f"-Drdfrules.writable.path={workspace}",
-        "-cp", f"{path}/lib/*",
+        "-cp", os.path.join(path, "lib", "*"),
         "com.github.propi.rdfrules.http.Main"
     ]
     
+    print(command)
+
     process = subprocess.Popen(
         command, 
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
-        preexec_fn=os.setsid
+        preexec_fn=os.setsid if "setsid" in dir(os) else None
     )
     
     # TODO - rework this

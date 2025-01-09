@@ -85,7 +85,7 @@ import pyrdfrules.application
 
 app = pyrdfrules.application.Application()
 
-rdfrules = await app.start_remote(
+rdfrules = app.start_remote(
     url = Url("http://YOUR_RDFRULES_INSTANCE/api/")
 )
 ```

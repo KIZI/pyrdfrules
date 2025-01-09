@@ -10,3 +10,4 @@ wip/
 .env
 src/pyrdfrules/engine/rdfrules/
 src/workspace/
+src/jvm/
