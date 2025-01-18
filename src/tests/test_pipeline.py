@@ -71,7 +71,7 @@ class TestPipeline(unittest.TestCase):
             ]
         )
         
-        path = os.path.join(os.getcwd(), "src/tests/data/task.json")
+        path = os.path.realpath(os.path.join(os.path.dirname((os.path.realpath(__file__))), "data", "task.json"))
         
         with open(path, "r") as file:        
             task_json_from_file = json.loads(file.read())
