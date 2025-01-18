@@ -213,9 +213,9 @@ class Properties(RDFRulesTaskModel):
 
 class Histogram(RDFRulesTaskModel):
     name: Literal["Histogram"] = "Histogram"
-    subject: bool
-    predicate: bool
-    object: bool
+    subject: Optional[bool] = None
+    predicate: Optional[bool] = None
+    object: Optional[bool] = None
 
 
 class LoadIndex(RDFRulesTaskModel):
