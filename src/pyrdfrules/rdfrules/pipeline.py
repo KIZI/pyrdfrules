@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import List, Literal, Never, Optional, Union
+from typing import List, Literal, Optional, Union
 from pydantic import AnyUrl, BaseModel, model_serializer
 from enum import Enum
 
@@ -57,7 +57,7 @@ class ArbitraryPipelineTask(RDFRulesTaskModel):
     """Raw parameters of the task.
     """
     
-    extra: Never
+    extra: None
     """Extra parameters are not take into account.
     """
     
