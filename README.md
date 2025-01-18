@@ -44,6 +44,7 @@ PyRDFRules
     - [Run a task](#run-a-task)
 - [Developing](#developing)
 - [Releasing a new version](#releasing-a-new-version)
+  - [Updating RDFRules](#updating-rdfrules)
 - [Roadmap](#roadmap)
 - [Contributing](#contributing)
 - [License](#license)
@@ -60,6 +61,11 @@ PyRDFRules is a Python wrapper for the graph rule mining tool RDFRules.
 Repository for RDFRules can be found at [propi/rdfrules](https://github.com/propi/rdfrules).
 
 ## Quickstart
+
+To try out PyRDFRules, you can use Google Colab to provision an environment for you.
+
+* [Template RDFRules Notebook](https://colab.research.google.com/drive/1KCyv7b6RtQgQXk-V-oTjYpiQsC-_mFHp?usp=sharing) - use this notebook as a start for your analysis workloads, provisions the PyRDFRules library and local RDFRules.
+* [Pipeline sample](https://colab.research.google.com/drive/192YaNsbpqoD9-he32OaY2nTi-E_ctXYT?usp=sharing) - a sample pipeline on a local instance of RDFRules, from starting the instance to getting the results.
 
 ## Getting started
 
@@ -186,6 +192,10 @@ To run a build and run jupyter lab:
 * Run hatch publish
 
 Alternatively, after upping the version, run `./build.sh`.
+
+### Updating RDFRules
+* In `src/pyrdfrules/rdfrules/release.py` update the URI to the RDFRules HTTP ZIP path.
+* If the startup options change, please ensure that the function `start_rdfrules` in  `src/pyrdfrules/engine/util/jvm.py` matches the changes.
 
 ## Roadmap
 
