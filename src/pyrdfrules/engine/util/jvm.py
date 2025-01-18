@@ -21,6 +21,7 @@ import zipfile
 
 started = False
 result_process = None
+result_processes = []
 server_url = None
 
 _jvm_path = None
@@ -128,7 +129,7 @@ def set_jvm_env() -> None:
     global _port
     
     if _port is not None:
-        os.environ["RDFRULES_PORT"] = str
+        os.environ["RDFRULES_PORT"] = str(_port)
     
     log().debug(f"JAVA_HOME: {os.environ['JAVA_HOME']}")
     log().debug(f"PATH: {os.environ['PATH']}")
@@ -217,9 +218,8 @@ def start_rdfrules(pipe):
     )
     
     # TODO - rework this
-    global result_process
-    
-    result_process = process.pid
+    global result_processes
+    result_processes.append(process.pid)
     
     Thread(target=read_output_stdout, args=(pipe, process)).start()
     Thread(target=read_output_stderr, args=(pipe, process)).start()
@@ -265,7 +265,10 @@ def start_rdfrules_process():
     
     log().debug("Started RDFRules process")
     
-    return proc
+    global result_processes
+    proccess_id = result_processes[-1]
+    
+    return [proc, proccess_id]
 
 def get_server_url():
     if server_url.endswith("/"):
@@ -273,6 +276,6 @@ def get_server_url():
     
     return server_url + "/api/"
 
-def stop_rdfrules_process():
+def stop_rdfrules_process(proccess_id: int):
     log().info("Stopping RDFRules process")
-    os.killpg(os.getpgid(result_process), 15)
+    os.killpg(os.getpgid(proccess_id), 15)

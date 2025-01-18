@@ -44,6 +44,10 @@ class LocalHttpEngine(HttpEngine):
     """
     __process: Process
     
+    __pid: int
+    """
+    PID of the RDFRules process.
+    """
 
     __ready: bool = False
     """
@@ -76,7 +80,10 @@ class LocalHttpEngine(HttpEngine):
             pass
         
         try :
-            self.__process = start_rdfrules_process()
+            result = start_rdfrules_process()
+            self.__process = result[0]
+            self.__pid = result[1]
+            
         except FailedToStartException as e:
             exit(1)
 
@@ -109,6 +116,6 @@ class LocalHttpEngine(HttpEngine):
         Stops the engine.
         """
         
-        stop_rdfrules_process()
+        stop_rdfrules_process(self.__pid)
         
         pass

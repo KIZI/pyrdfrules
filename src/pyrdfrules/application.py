@@ -1,3 +1,4 @@
+from typing import List
 from pydantic import BaseModel
 from pyrdfrules.common.http.url import Url
 
@@ -13,7 +14,7 @@ class Application(BaseModel):
     The Application class provides methods to start and stop local or remote instances of RDFRules.
     """
     
-    __rdfrules: RDFRules|None = None
+    __rdfrules: List[RDFRules] = []
         
     def start_local(self, config: Config|None = None, **kwargs) -> RDFRules:
         """Starts a local instance of RDFRules.
@@ -24,7 +25,7 @@ class Application(BaseModel):
             install_rdfrules: True if RDFRules should be installed.
             rdfrules_path:  Path where RDFRules is installed, or where it should be downloaded to.
             jvm_path: Path where JVM is installed, or where it should be downloaded to.
-            port: Port to use
+            port: Port to use, if not specified, will default to 8851 + the number of instances already started.
             **kwargs: Additional arguments.
             
         Returns:
@@ -32,11 +33,14 @@ class Application(BaseModel):
         
         """
         
+        if "port" not in kwargs and len(self.__rdfrules) > 0:
+            kwargs["port"] = 8851 + len(self.__rdfrules)
+        
         log().info("Starting local RDFRules")
         
         config = Config() if config is None else config
         
-        self.__rdfrules = RDFRules(
+        rdfrules = RDFRules(
             engine=LocalHttpEngine(
                 config=config,
                 **kwargs
@@ -44,11 +48,14 @@ class Application(BaseModel):
             config=config
         )
         
-        self.__rdfrules.engine.start()
+        rdfrules.engine.start()
+        
+        self.__rdfrules.append(rdfrules)
+        configure_logging(rdfrules.config)
         
         log().info("Local instance of RDFRules started")
         
-        return self.__rdfrules
+        return rdfrules
     
     def start_remote(self, url: Url|str, config: Config|None = None) -> RDFRules:
         """Starts a remote instance of RDFRules.
@@ -58,7 +65,7 @@ class Application(BaseModel):
         
         config = Config() if config is None else config
         
-        self.__rdfrules = RDFRules(
+        rdfrules = RDFRules(
             engine=RemoteHttpEngine(
                 config=config,
                 url=url
@@ -66,18 +73,27 @@ class Application(BaseModel):
             config=config
         )
         
-        configure_logging(self.__rdfrules.config)
+        self.__rdfrules.append(rdfrules)
         
-        self.__rdfrules.engine.start()
+        configure_logging(rdfrules.config)
+        
+        rdfrules.engine.start()
         
         log().info("Connected to remote instance of RDFRules at %s", url)
         
-        return self.__rdfrules
+        return rdfrules
     
     def stop(self) -> None:
         """Stops the application.
         """
         
-        log().info("Stopping RDFRules")
+        log().info(f"Stopping {len(self.__rdfrules)} instance(s) of RDFRules")
         
-        self.__rdfrules.engine.stop()
+        count = len(self.__rdfrules)
+        it = 0
+        
+        for rdfrules in self.__rdfrules:
+            it += 1
+            log().info(f"Stopping RDFRules instance {it} of {count}")
+            rdfrules.engine.stop()
+            log().info(f"Stopped RDFRules instance {it} of {count}")

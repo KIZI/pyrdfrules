@@ -6,6 +6,7 @@ from pyrdfrules.common.http.url import Url
 import pyrdfrules.application
 from pyrdfrules.common.task.task import Task
 from pyrdfrules.config import Config
+import os
 
 class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
         
@@ -43,21 +44,24 @@ class TestRemoteApplication(unittest.IsolatedAsyncioTestCase):
         
         task : Task = None
         
-        with open("./tests/data/task.json", "r") as file:        
+        path = os.path.realpath(os.path.join(os.path.dirname((os.path.realpath(__file__))), "data", "task.json")) 
+        
+        with open(path, "r") as file:        
             task_json_from_file = file.read()
             task = rdfrules.task.create_task_from_string(task_json_from_file)
             self.assertIsNotNone(task, "Should not be None")
             
-        rdfrules.task.run_task(task)
+        gen = rdfrules.task.run_task(task)
         
-        print("Finished task")
-        print(task.result)
-            
-        #for i in range(10):
-        #    progress = rdfrules.task.get_task_by_id(task.id)
-        #    self.assertIsNotNone(progress, "Should not be None")
-        #    print(progress)
-        #    time.sleep(10)
+        print("Started a task task")
+        
+        for t in gen:
+            print("Task step")
+            self.assertIsInstance(t, Task, "Should be an instance of Task")
+            pass
+        
+        self.assertIsNotNone(task.result, "Should not be None")
+        self.assertTrue(task.finished, "Should be finished")
         
         app.stop()
 
