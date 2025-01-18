@@ -50,19 +50,6 @@ class Ruleset(BaseModel):
         """
         return "\n".join([rule.as_text() for rule in self.rules])
     
-    # region iterator
-    def __iter__(self):
-        self.__iterator_index = 0
-        return self
-
-    def __next__(self) -> ResultRule | None:
-        idx = self.__iterator_index + 1
-        
-        if len(self.rules) < idx:
-            self.__iterator_index = idx
-            return self.rules[idx]
-        
-        return None
     # endregion
     
     # todo - sort by functions, serialisation, deserialisation, export to some well-known formats for further analysis

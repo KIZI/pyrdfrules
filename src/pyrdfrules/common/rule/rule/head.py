@@ -11,9 +11,9 @@ class RuleHead(BaseModel):
     
     object: Object
     
-    predicate: str
+    predicate: str|dict
     
     subject: Subject
     
     def as_text(self) -> str:
-        return "(" + self.subject.value + ' <' + self.predicate + '> ' + self.object.value + ")"
+        return "(" + self.subject.value + ' <' + str(self.predicate) + '> ' + self.object.value + ")"

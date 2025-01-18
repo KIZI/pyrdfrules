@@ -10,9 +10,15 @@ class RuleBody(BaseModel):
     
     object: Object
     
-    predicate: Predicate
+    predicate: Predicate|str|dict
     
     subject: Subject
     
+    def get_predicate_text(self) -> str:
+        if isinstance(self.predicate, Predicate):
+            return self.predicate.localName
+        else:
+            return str(self.predicate)
+    
     def as_text(self) -> str:
-        return "(" + self.subject.value + ' <' + self.predicate.localName + '> ' + self.object.value + ")"
+        return "(" + self.subject.value + ' <' + self.get_predicate_text() + '> ' + self.object.value + ")"

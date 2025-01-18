@@ -6,6 +6,7 @@ from unittest.mock import patch, MagicMock
 import requests
 import pyrdfrules
 from pyrdfrules.application import Application
+from pyrdfrules.common.result.result import Result
 from pyrdfrules.config import Config
 from pyrdfrules.config import Config
 from pyrdfrules.rdfrules.commondata import ConfidenceType, Constraint, RuleConsumer, RuleConsumerType, Threshold
@@ -126,6 +127,13 @@ class TestLocalPipeline(unittest.TestCase):
             print(step)
             self.assertIsNotNone(step, "Should not be None")
         
+        self.assertIsNotNone(task.result, "Should not be None")
+        self.assertIsInstance(task.result, list, "Should be a list")
+        
+        self.assertIsNotNone(task.get_result(), "Should not be None")
+        self.assertIsInstance(task.get_result(), Result, "Should be a Result")
+        
+        print(task.get_result().get_ruleset().as_text())
         print(task.result)
 
 if __name__ == '__main__':

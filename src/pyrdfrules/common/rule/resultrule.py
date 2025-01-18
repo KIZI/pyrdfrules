@@ -1,11 +1,12 @@
 from typing import List
 from pydantic import BaseModel
 
+from pyrdfrules.common.result.resultobject import ResultObject
 from pyrdfrules.common.rule.measure.measure import RuleMeasure
 from pyrdfrules.common.rule.rule.body import RuleBody
 from pyrdfrules.common.rule.rule.head import RuleHead
 
-class ResultRule(BaseModel):
+class ResultRule(ResultObject):
     """
     Rule mined by RDFRules.
     """
