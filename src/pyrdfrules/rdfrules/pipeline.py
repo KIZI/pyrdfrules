@@ -42,8 +42,8 @@ class RDFRulesTaskModel(BaseModel):
 
         result = {'name': self.name, 'parameters': parameters}
         
-        if self.extraParameters is not None and len(self.extraParameters) > 0:
-            result.update(self.extraParameters)
+        if self.extra is not None and len(self.extra) > 0:
+            result.update(self.extra)
         
         return result
     pass
