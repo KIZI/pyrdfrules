@@ -52,7 +52,7 @@ PyRDFRules
 
 ## PyRDFRules
 
-PyRDFRules is a Python wrapper for the graph rule mining tool RDFRules.
+PyRDFRules is a Python wrapper for the graph rule mining tool RDFRules. Currently supports the RDFRules version `1.9.0`. The added value of this library is exposing a Pythonic interface to define pipelines for tasks that can be handled by RDFRules, as well as provisioning RDFRules locally, and finally, some convenience methods and other APIs are added to faciliate easier usage of RDFRules.
 
 ### RDFRules
 
