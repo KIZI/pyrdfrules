@@ -28,9 +28,9 @@ class TestMultipleLocalInstances(unittest.TestCase):
     
     def test_starts_multiple(self):
         """
-        Runs a pipeline locally.
+        Runs multiple instances locally.
         """
-        
+
         rdfrules_one = self.instance.start_local(
             install_jvm = True,
             install_rdfrules = True,

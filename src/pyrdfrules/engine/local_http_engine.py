@@ -4,6 +4,7 @@ from pyrdfrules.common.http.url import Url
 from pyrdfrules.api.http_rdfrules_api import HTTPRDFRulesApi
 from pyrdfrules.api.http_rdfrules_api_context import HTTPRDFRulesApiContext
 from pyrdfrules.api.rdfrules_api_context import RDFRulesApiContext
+from pyrdfrules.common.logging.logger import log
 from pyrdfrules.config import Config
 from pyrdfrules.engine.engine import Engine
 from pyrdfrules.engine.exception.failed_to_start_exception import FailedToStartException
@@ -116,6 +117,11 @@ class LocalHttpEngine(HttpEngine):
         Stops the engine.
         """
         
+        if not self.__ready:
+            log().warning("Engine not ready, cannot stop")
+            return        
+        
         stop_rdfrules_process(self.__pid)
+        self.__ready = False
         
         pass
