@@ -15,6 +15,10 @@ PyRDFRules
     RDFRules
   </a>
   •
+  <a href="#quickstart">
+    Quickstart
+  </a>
+  •
   <a href="https://kizi.github.io/pyrdfrules/pyrdfrules.html">
     Documentation
   </a>
@@ -30,6 +34,7 @@ PyRDFRules
 
 - [PyRDFRules](#pyrdfrules)
   - [RDFRules](#rdfrules)
+- [Quickstart](#quickstart)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -53,6 +58,8 @@ PyRDFRules is a Python wrapper for the graph rule mining tool RDFRules.
 > RDFRules is a powerful analytical tool for rule mining from RDF knowledge graphs. It offers a complex rule mining solution including RDF data pre-processing, rules post-processing and prediction abilities from rules. The core of RDFRules is written in the Scala language. Besides the Scala API, RDFRules also provides REST web service with graphical user interface via a web browser.
 
 Repository for RDFRules can be found at [propi/rdfrules](https://github.com/propi/rdfrules).
+
+## Quickstart
 
 ## Getting started
 
