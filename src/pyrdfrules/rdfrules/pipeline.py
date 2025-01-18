@@ -1,12 +1,11 @@
 from __future__ import annotations
 
-from typing import List, Literal, Optional, Union
+from typing import List, Literal, Never, Optional, Union
 from pydantic import AnyUrl, BaseModel, model_serializer
 from enum import Enum
 
 from pyrdfrules.rdfrules.commondata import ConfidenceType, Constraint, RuleConsumer, SupportType, Threshold
 from pyrdfrules.rdfrules.jsonformats import PrefixFull
-
 
 class Pipeline(BaseModel):
     """Pipeline is a sequence of tasks to be executed.
@@ -20,19 +19,55 @@ class Pipeline(BaseModel):
     pass
 
 class RDFRulesTaskModel(BaseModel):
-
+    """Base class for RDFRules tasks.
+    
+    Attributes:
+        name (Literal): The name of the task.
+    """
+    
+    extra: Optional[dict] = None
+    """
+    Extra parameters of the task.
+    """
+    
     @model_serializer()
     def serialize_model(self):
+        """@private"""
         
         parameters = {}
         
         for key, value in vars(self).items():
-            if key != 'name' and value is not None:
+            if key != 'name' and key != 'extra' and value is not None:
                 parameters[key] = value
 
-        return {'name': self.name, 'parameters': parameters}
+        result = {'name': self.name, 'parameters': parameters}
+        
+        if self.extraParameters is not None and len(self.extraParameters) > 0:
+            result.update(self.extraParameters)
+        
+        return result
     pass
 
+class ArbitraryPipelineTask(RDFRulesTaskModel):
+    name: str
+    """Any task that is not supported by the library can be represented by this class.
+    """
+    
+    parameters: dict
+    """Raw parameters of the task.
+    """
+    
+    extra: Never
+    """Extra parameters are not take into account.
+    """
+    
+    @model_serializer()
+    def serialize_model(self):
+        """@private"""
+        
+        return {'name': self.name, 'parameters': self.parameters}
+
+    pass
 class LoadGraph(RDFRulesTaskModel):
     name: Literal["LoadGraph"] = "LoadGraph"
     

@@ -5,6 +5,65 @@
 """
 PyRDFRules is a Python wrapper for the RDFRules tool, providing an interface to interact with RDFRules for rule mining from RDF knowledge graphs.
 
+## Features
+
+- Start and stop the RDFRules engine.
+- Provision a local instance of RDFRules.
+- Create and run tasks.
+- Access the results of the tasks.
+- Format the results of the tasks.
+
+## Quickstart
+
+If you want to get started with PyRDFRules instantly, you can use one of the two following Google Colab notebooks:
+
+* [Template RDFRules Notebook](https://colab.research.google.com/drive/1KCyv7b6RtQgQXk-V-oTjYpiQsC-_mFHp?usp=sharing) - use this notebook as a start for your analysis workloads, provisions the PyRDFRules library and local RDFRules.
+* [Pipeline sample](https://colab.research.google.com/drive/192YaNsbpqoD9-he32OaY2nTi-E_ctXYT?usp=sharing) - a sample pipeline on a local instance of RDFRules, from starting the instance to getting the results.
+
+## Installation
+
+1. Install the package using pip:
+```bash
+pip install pyrdfrules
+```
+
+2. Configure the RDFRules instance ahead of time using the `Config` class:
+
+```python
+from pyrdfrules.config import Config
+
+config = Config()
+``` 
+
+3. Start a local instance of RDFRules:
+```python
+app = pyrdfrules.application.Application()
+
+rdfrules = app.start_local(
+    install_jvm = True,
+    install_rdfrules = True,
+    config = config
+)
+```
+
+## Modules
+
+The library is segmented into the following modules:
+
+* `pyrdfrules.api` - internal API classes.
+* `pyrdfrules.application` - provides methods to start and stop local or remote instances of RDFRules.
+* `pyrdfrules.common` - contains common classes and methods.
+* `pyrdfrules.config` - configuration class.
+* `pyrdfrules.engine` - contains the engine classes, responsible for the lifetime of the RDFRules instance.
+* `pyrdfrules.rdfrules` - contains wrappers around RDFRules objects.
+
+## Supported operations
+
+Supported operations and bindings of serialized items for each domain can be found at:
+* `pyrdfrules.rdfrules` - pipeline operations,
+
+## Sample pipeline
+
 Sample usage:
 ```python
 import pyrdfrules.application
@@ -27,54 +86,54 @@ rdfrules = app.start_remote(
 
 # Create a pipeline, a sequence of steps to be executed.
 # You do not have to use fully qualified names for the classes, as they are imported in the example.
-pipeline = pyrdfrules.rdfrules.pipeline.Pipeline(
+pipeline = Pipeline(
     tasks=[
-        pyrdfrules.rdfrules.pipeline.LoadGraph(
+        LoadGraph(
             graphName = "<dbpedia>",
             path = "/dbpedia_yago/mappingbased_objects_sample.ttl"
         ),
-        pyrdfrules.rdfrules.pipeline.LoadGraph(
+        LoadGraph(
             graphName = "<yago>",
             path = "/dbpedia_yago/yagoFacts.tsv",
             settings = "tsvParsedUris"
         ),
-        pyrdfrules.rdfrules.pipeline.LoadGraph(
+        LoadGraph(
             graphName = "<dbpedia>",
             path = "/dbpedia_yago/yagoDBpediaInstances.tsv",
             settings = "tsvParsedUris"
         ),
-        pyrdfrules.rdfrules.pipeline.MergeDatasets(),
-        pyrdfrules.rdfrules.jsonformats.AddPrefixes(
+        MergeDatasets(),
+        AddPrefixes(
             prefixes=[
-                pyrdfrules.rdfrules.jsonformats.PrefixFull(prefix="dbo", nameSpace="http://dbpedia.org/ontology/"),
-                pyrdfrules.rdfrules.jsonformats.PrefixFull(prefix="dbr", nameSpace="http://dbpedia.org/resource/")
+                PrefixFull(prefix="dbo", nameSpace="http://dbpedia.org/ontology/"),
+                PrefixFull(prefix="dbr", nameSpace="http://dbpedia.org/resource/")
             ]
         ),
-        pyrdfrules.rdfrules.pipeline.Index(train=[], test=[]),
-        pyrdfrules.rdfrules.pipeline.Mine(
+        Index(train=[], test=[]),
+        Mine(
             thresholds=[
-                pyrdfrules.rdfrules.commondata.Threshold(name="MinHeadSize", value=100),
-                pyrdfrules.rdfrules.commondata.Threshold(name="MaxRuleLength", value=3),
-                pyrdfrules.rdfrules.commondata.Threshold(name="Timeout", value=5),
-                pyrdfrules.rdfrules.commondata.Threshold(name="MinHeadCoverage", value=0.01),
+                Threshold(name="MinHeadSize", value=100),
+                Threshold(name="MaxRuleLength", value=3),
+                Threshold(name="Timeout", value=5),
+                Threshold(name="MinHeadCoverage", value=0.01),
             ],
             ruleConsumers=[
-                pyrdfrules.rdfrules.commondata.RuleConsumer(
-                    name=pyrdfrules.rdfrules.commondata.RuleConsumerType.TOP_K,
+                RuleConsumer(
+                    name=RuleConsumerType.TOP_K,
                     k=1000,
                     allowOverflow=False
                 )
             ],
             patterns=[],
             constraints=[
-                pyrdfrules.rdfrules.commondata.Constraint(name="WithoutConstants")
+                Constraint(name="WithoutConstants")
             ],
             parallelism=0
         ),
-        pyrdfrules.rdfrules.pipeline.ComputeConfidence(confidenceType=ConfidenceType.PCA_CONFIDENCE, min=0.5, topk=50),
-        pyrdfrules.rdfrules.pipeline.SortRuleset(by=[]),
-        pyrdfrules.rdfrules.pipeline.GraphAwareRules(),
-        pyrdfrules.rdfrules.pipeline.GetRules()
+        ComputeConfidence(confidenceType=ConfidenceType.PCA_CONFIDENCE, min=0.5, topk=50),
+        SortRuleset(by=[]),
+        GraphAwareRules(),
+        GetRules()
     ]
 )
 
