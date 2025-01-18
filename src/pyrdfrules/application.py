@@ -20,6 +20,11 @@ class Application(BaseModel):
         
         Args:
             config: The configuration to use.
+            install_jvm: True if JVM should be installed.
+            install_rdfrules: True if RDFRules should be installed.
+            rdfrules_path:  Path where RDFRules is installed, or where it should be downloaded to.
+            jvm_path: Path where JVM is installed, or where it should be downloaded to.
+            port: Port to use
             **kwargs: Additional arguments.
             
         Returns:
@@ -30,9 +35,6 @@ class Application(BaseModel):
         log().info("Starting local RDFRules")
         
         config = Config() if config is None else config
-        
-        # todo - add optional path to RDFRules
-        # todo - add JVM path
         
         self.__rdfrules = RDFRules(
             engine=LocalHttpEngine(

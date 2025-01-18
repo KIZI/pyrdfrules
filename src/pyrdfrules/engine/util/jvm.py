@@ -14,7 +14,7 @@ import platform
 
 from pyrdfrules.common.logging.logger import log
 from pyrdfrules.engine.exception.failed_to_start_exception import FailedToStartException
-from pyrdfrules.rdfrules.release import JVM_VERSION, RDFRULES_DOWNLOAD_URI
+from pyrdfrules.rdfrules.release import JVM_VERSION, RDFRULES_DOWNLOAD_URI, RDFRULES_VERSION, RDFRULES_REVISION
 
 from tqdm import tqdm
 import zipfile
@@ -27,6 +27,7 @@ _jvm_path = None
 _rdfrules_path = None
 
 _workspace_path = None
+_port = None
 
 def get_base_dir():
     return os.path.realpath(os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "..", ".."))
@@ -35,7 +36,7 @@ def get_workspace_dir():
     global _workspace_path
     return _workspace_path
 
-def setup(rdf_rules_path: str = '', jvm_path: str = '', workspace_path: str|Path|None = '') -> None:
+def setup(rdf_rules_path: str = '', jvm_path: str = '', workspace_path: str|Path|None = '', port = None) -> None:
     if not workspace_path:
         workspace_path = os.path.join(get_base_dir(), "workspace")
     
@@ -50,6 +51,16 @@ def setup(rdf_rules_path: str = '', jvm_path: str = '', workspace_path: str|Path
     
     global _workspace_path
     _workspace_path = str(workspace_path)
+    
+    global _port
+    if port is not None:
+        if not isinstance(port, int):
+            raise ValueError("Port must be an integer")
+        
+        if int(port) < 0 or int(port) > 65535:
+            raise ValueError("Port must be between 0 and 65535")
+
+    _port = port
     
     if not os.path.exists(_workspace_path):
         os.makedirs(_workspace_path, exist_ok=True)
@@ -113,6 +124,11 @@ def set_jvm_env() -> None:
     os.environ["PATH"] = os.path.join(java_home, "bin") + ":%s" % (os.environ["PATH"])
     os.environ["RDFRULES_STOPPING_TOKEN"] = "stoppingtoken"
     os.environ["RDFRULES_WORKSPACE"] = get_workspace_dir()
+    
+    global _port
+    
+    if _port is not None:
+        os.environ["RDFRULES_PORT"] = str
     
     log().debug(f"JAVA_HOME: {os.environ['JAVA_HOME']}")
     log().debug(f"PATH: {os.environ['PATH']}")
@@ -184,8 +200,8 @@ def start_rdfrules(pipe):
     
     command = [
         os.path.join(get_jvm_home(), "bin", "java"),
-        "-Dprog.version=1.7.2",
-        "-Dprog.revision=3ea05ae9ef9d9258c005a1971721225663d57f98",
+        f"-Dprog.version={RDFRULES_VERSION}",
+        f"-Dprog.revision={RDFRULES_REVISION}",
         f"-Dprog.home={path}",
         f"-Drdfrules.writable.path={workspace}",
         "-cp", os.path.join(path, "lib", "*"),

@@ -50,14 +50,14 @@ class LocalHttpEngine(HttpEngine):
     Set to true after all startup checks have passed.
     """
     
-    def __init__(self, config : Config, install_jvm: bool = False, install_rdfrules: bool = False, rdfrules_path: str = '', jvm_path: str = '') -> None:
+    def __init__(self, config : Config, install_jvm: bool = False, install_rdfrules: bool = False, rdfrules_path: str = '', jvm_path: str = '', port: int|None = None) -> None:
         super().__init__(config=config)
         self.install_jvm = install_jvm
         self.install_rdfrules = install_rdfrules
         self.rdfrules_path = rdfrules_path
         self.jvm_path = jvm_path
         
-        setup(rdfrules_path, jvm_path, workspace_path=config.workspace_path)
+        setup(rdfrules_path, jvm_path, workspace_path=config.workspace_path, port=port)
     
     def install(self) -> None:
         """Installs RDFRules locally.
