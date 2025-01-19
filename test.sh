@@ -2,6 +2,7 @@
 
 echo "Installing dependencies"
 
+pip install hatch
 pip install coverage==7.6.10
 
 echo "Running tests"

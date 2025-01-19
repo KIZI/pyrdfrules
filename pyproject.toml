@@ -180,7 +180,7 @@ exclude_lines = [
 [tool.hatch.build.hooks.jupyter-builder]
 dependencies = ["hatch-jupyter-builder"]
 build-function = "hatch_jupyter_builder.npm_builder"
-install-pre-commit-hook = true
+install-pre-commit-hook = false
 optional-editable-build = true
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
