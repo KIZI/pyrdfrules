@@ -2,12 +2,7 @@ name: publish
 
 # build the documentation whenever there are new commits on main
 on:
-    push:
-      branches:
-        - main
-    release:
-      types:
-        - published
+    workflow_dispatch: 
 
 # .github/workflows/ci-cd.yml
 jobs:
