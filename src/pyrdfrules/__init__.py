@@ -35,6 +35,8 @@ from pyrdfrules.config import Config
 config = Config()
 ``` 
 
+For config options, click on the `pyrdfrules.config.Config` class in the documentation.
+
 3. Start a local instance of RDFRules:
 ```python
 app = pyrdfrules.application.Application()
@@ -57,10 +59,14 @@ The library is segmented into the following modules:
 * `pyrdfrules.engine` - contains the engine classes, responsible for the lifetime of the RDFRules instance.
 * `pyrdfrules.rdfrules` - contains wrappers around RDFRules objects.
 
-## Supported operations
+## Supported operations and result types
 
 Supported operations and bindings of serialized items for each domain can be found at:
 * `pyrdfrules.rdfrules` - pipeline operations,
+* `pyrdfrules.common.result` - result types,
+** `pyrdfrules.rdfrules.evaluation` - evaluation results, printing confusion matrix,
+** `pyrdfrules.rdfrules.histogram` - histogram results, printing histograms, top N results,
+** `pyrdfrules.common.rule.ruleset` - ruleset, printing individual `pyrdfrules.common.rule.rule` rules in text format.
 
 ## Sample pipeline
 
