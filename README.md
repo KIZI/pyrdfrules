@@ -1,6 +1,7 @@
 
 [![PyPI - Version](https://img.shields.io/pypi/v/pyrdfrules.svg)](https://pypi.org/project/pyrdfrules)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyrdfrules.svg)](https://pypi.org/project/pyrdfrules)
+[![PyPI - Python Version](https://raw.githubusercontent.com/KIZI/pyrdfrules/python-coverage-comment-action-data/badge.svg)](https://htmlpreview.github.io/?https://github.com/KIZI/pyrdfrules/blob/python-coverage-comment-action-data/htmlcov/index.html)
 
 <p align="center">
   <img src="https://s3.dualstack.us-east-2.amazonaws.com/pythondotorg-assets/media/files/python-logo-only.svg">
