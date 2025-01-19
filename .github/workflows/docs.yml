@@ -5,9 +5,10 @@ on:
   push:
     branches:
       - main
-    # Alternative: only build for tags.
-    # tags:
-    #   - '*'
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
 
 # security: restrict permissions for CI jobs.
 permissions:
