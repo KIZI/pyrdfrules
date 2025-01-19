@@ -28,7 +28,7 @@
 | src/pyrdfrules/common/file/workspace\_tree.py                                    |       20 |        1 |        6 |        1 |     92% |31->46, 60 |
 | src/pyrdfrules/common/format/confusion\_matrix.py                                |       12 |        0 |        0 |        0 |    100% |           |
 | src/pyrdfrules/common/format/histogram.py                                        |       13 |        0 |        2 |        0 |    100% |           |
-| src/pyrdfrules/common/http/get\_http\_client.py                                  |        9 |        0 |        2 |        0 |    100% |           |
+| src/pyrdfrules/common/http/get\_http\_client.py                                  |        7 |        0 |        0 |        0 |    100% |           |
 | src/pyrdfrules/common/http/http\_client.py                                       |       28 |        1 |        0 |        0 |     96% |        24 |
 | src/pyrdfrules/common/http/http\_request.py                                      |        0 |        0 |        0 |        0 |    100% |           |
 | src/pyrdfrules/common/http/url.py                                                |        3 |        0 |        0 |        0 |    100% |           |
@@ -55,11 +55,11 @@
 | src/pyrdfrules/engine/engine.py                                                  |       35 |        9 |        2 |        0 |     70% |9-10, 48, 54, 61, 77, 89-94 |
 | src/pyrdfrules/engine/exception/failed\_to\_start\_exception.py                  |        4 |        1 |        0 |        0 |     75% |         8 |
 | src/pyrdfrules/engine/http\_engine.py                                            |        9 |        0 |        0 |        0 |    100% |           |
-| src/pyrdfrules/engine/local\_http\_engine.py                                     |       62 |        5 |        8 |        2 |     90% |81, 88-89, 121-122 |
+| src/pyrdfrules/engine/local\_http\_engine.py                                     |       72 |        6 |       10 |        3 |     89% |90, 99->exit, 105-107, 139-140 |
 | src/pyrdfrules/engine/remote\_http\_engine.py                                    |       26 |        0 |        0 |        0 |    100% |           |
 | src/pyrdfrules/engine/result/pipeline.py                                         |        2 |        0 |        0 |        0 |    100% |           |
 | src/pyrdfrules/engine/result/used\_memory.py                                     |        6 |        6 |        0 |        0 |      0% |      1-16 |
-| src/pyrdfrules/engine/util/jvm.py                                                |      165 |       13 |       42 |       10 |     89% |59, 62, 70, 91-92, 103->exit, 144, 182, 191, 245-246, 263-264, 277 |
+| src/pyrdfrules/engine/util/jvm.py                                                |      165 |       13 |       42 |       12 |     88% |57->64, 59, 62, 70, 91-92, 103->exit, 131->134, 144, 182, 191, 245-246, 263-264, 277 |
 | src/pyrdfrules/rdfrules/commondata.py                                            |      237 |        0 |        4 |        0 |    100% |           |
 | src/pyrdfrules/rdfrules/jsonformats.py                                           |       31 |        0 |        0 |        0 |    100% |           |
 | src/pyrdfrules/rdfrules/pipeline.py                                              |      304 |        2 |       12 |        1 |     99% |    46, 68 |
@@ -67,7 +67,7 @@
 | src/pyrdfrules/rdfrules/release.py                                               |        4 |        0 |        0 |        0 |    100% |           |
 | src/pyrdfrules/rdfrules/workspace.py                                             |       14 |       14 |        0 |        0 |      0% |      1-21 |
 | src/pyrdfrules/rdfrules/writers.py                                               |       49 |       49 |        0 |        0 |      0% |      1-70 |
-|                                                                        **TOTAL** | **1847** |  **229** |  **162** |   **34** | **87%** |           |
+|                                                                        **TOTAL** | **1855** |  **230** |  **162** |   **37** | **86%** |           |
 
 
 ## Setup coverage badge
