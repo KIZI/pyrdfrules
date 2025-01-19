@@ -64,8 +64,8 @@ The library is segmented into the following modules:
 Supported operations and bindings of serialized items for each domain can be found at:
 * `pyrdfrules.rdfrules` - pipeline operations,
 * `pyrdfrules.common.result` - result types,
-** `pyrdfrules.rdfrules.evaluation` - evaluation results, printing confusion matrix,
-** `pyrdfrules.rdfrules.histogram` - histogram results, printing histograms, top N results,
+** `pyrdfrules.common.result.evaluation` - evaluation results, printing confusion matrix,
+** `pyrdfrules.common.result.histogram` - histogram results, printing histograms, top N results,
 ** `pyrdfrules.common.rule.ruleset` - ruleset, printing individual `pyrdfrules.common.rule.rule` rules in text format.
 
 ## Sample pipeline
