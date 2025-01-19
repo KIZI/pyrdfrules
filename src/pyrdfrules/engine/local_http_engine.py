@@ -1,4 +1,5 @@
 from multiprocessing import Process
+import re
 
 from pyrdfrules.common.http.url import Url
 from pyrdfrules.api.http_rdfrules_api import HTTPRDFRulesApi
@@ -55,12 +56,20 @@ class LocalHttpEngine(HttpEngine):
     Set to true after all startup checks have passed.
     """
     
+    __port: int = None
+    
+    __url: str = None
+    """
+    URL of the RDFRules server.
+    """
+    
     def __init__(self, config : Config, install_jvm: bool = False, install_rdfrules: bool = False, rdfrules_path: str = '', jvm_path: str = '', port: int|None = None) -> None:
         super().__init__(config=config)
         self.install_jvm = install_jvm
         self.install_rdfrules = install_rdfrules
         self.rdfrules_path = rdfrules_path
         self.jvm_path = jvm_path
+        self.__port = port
         
         setup(rdfrules_path, jvm_path, workspace_path=config.workspace_path, port=port)
     
@@ -85,6 +94,19 @@ class LocalHttpEngine(HttpEngine):
             self.__process = result[0]
             self.__pid = result[1]
             
+            self.__url = get_server_url()
+            
+            print(self.__url)
+            print(self.__port)
+            
+            if self.__port is not None:
+                # stupid hack
+                # this can be solved by waiting for the server and removing the one global variable
+                current_port = re.search(r':(\d+)', self.__url).group(1)
+                print(current_port)
+                self.__url = self.__url.replace(current_port, str(self.__port))
+                print(self.__url)
+            
         except FailedToStartException as e:
             exit(1)
 
@@ -105,7 +127,7 @@ class LocalHttpEngine(HttpEngine):
         
         self.api = HTTPRDFRulesApi(
             HTTPRDFRulesApiContext(
-                Url(get_server_url()),
+                Url(self.__url),
                 self.config
             )
         )

@@ -33,7 +33,7 @@ class Application(BaseModel):
         
         """
         
-        if "port" not in kwargs and len(self.__rdfrules) > 0:
+        if "port" not in kwargs:
             kwargs["port"] = 8851 + len(self.__rdfrules)
         
         log().info("Starting local RDFRules")

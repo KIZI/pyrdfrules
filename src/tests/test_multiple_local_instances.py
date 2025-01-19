@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 import unittest
@@ -15,7 +16,8 @@ class TestMultipleLocalInstances(unittest.TestCase):
     def setUp(self):
         # download the pipeline files
         self.config = Config(
-            workspace_path=os.path.realpath(os.path.join(os.path.dirname((os.path.realpath(__file__))), "..", "rdfrules", "workspace"))
+            workspace_path=os.path.realpath(os.path.join(os.path.dirname((os.path.realpath(__file__))), "..", "rdfrules", "workspace")),
+            log_level=logging.DEBUG
         )
 
         self.instance = pyrdfrules.application.Application()
