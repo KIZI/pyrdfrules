@@ -96,19 +96,15 @@ class LocalHttpEngine(HttpEngine):
             
             self.__url = get_server_url()
             
-            print(self.__url)
-            print(self.__port)
-            
             if self.__port is not None:
                 # stupid hack
                 # this can be solved by waiting for the server and removing the one global variable
                 current_port = re.search(r':(\d+)', self.__url).group(1)
-                print(current_port)
                 self.__url = self.__url.replace(current_port, str(self.__port))
-                print(self.__url)
-            
+
         except FailedToStartException as e:
-            exit(1)
+            log().error(f"Failed to start RDFRules, check if the port {self.__port} is already in use")
+            raise e
 
     
     def start(self) -> None:
