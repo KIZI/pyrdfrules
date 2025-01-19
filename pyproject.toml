@@ -151,16 +151,24 @@ ban-relative-imports = "all"
 "tests/**/*" = ["PLR2004", "S101", "TID252"]
 
 [tool.coverage.run]
-source_pkgs = ["pyrdfrules", "tests"]
+source_pkgs = ["pyrdfrules"]
 branch = true
-parallel = true
+parallel = false
+relative_files = true
 omit = [
   "src/pyrdfrules/__about__.py",
+  "**/__init__.py",
 ]
 
 [tool.coverage.paths]
-pyrdfrules = ["src/pyrdfrules", "*/pyrdfrules/src/pyrdfrules"]
-tests = ["tests", "*/pyrdfrules/tests"]
+source = [
+  "src/pyrdfrules",
+  "*/pyrdfrules/src/pyrdfrules"
+]
+tests = [
+  "src/tests",
+  "*/pyrdfrules/tests"
+]
 
 [tool.coverage.report]
 exclude_lines = [

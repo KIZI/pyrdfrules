@@ -11,3 +11,6 @@ wip/
 src/pyrdfrules/engine/rdfrules/
 src/workspace/
 src/jvm/
+htmlcov
+.coverage*
+.pytest_cache/
