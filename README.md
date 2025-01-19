@@ -68,7 +68,7 @@ To try out PyRDFRules, you can use Google Colab to provision an environment for 
 * [Template RDFRules Notebook](https://colab.research.google.com/drive/1KCyv7b6RtQgQXk-V-oTjYpiQsC-_mFHp?usp=sharing) - use this notebook as a start for your analysis workloads, provisions the PyRDFRules library and local RDFRules.
 * [Pipeline sample](https://colab.research.google.com/drive/192YaNsbpqoD9-he32OaY2nTi-E_ctXYT?usp=sharing) - a sample pipeline on a local instance of RDFRules, from starting the instance to getting the results.
 * [Histogram example](https://colab.research.google.com/drive/1WfvvDTj3Zv0EJcLRiWl2EqEFgV42grra?usp=sharing) Showcases the histogram functionality of (Py)RDFRules, and can be used as a first step in analysis workloads for to understand the data.
-* 
+* [Multiple instances](https://colab.research.google.com/drive/17u7e9UtgwVUgFQxK8eRdViDwdSNY4p_i?usp=sharing) PyRDFRules can run multiple local instances.
 
 ## Getting started
 
